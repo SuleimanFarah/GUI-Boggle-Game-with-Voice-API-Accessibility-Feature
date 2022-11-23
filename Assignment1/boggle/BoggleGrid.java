@@ -1,5 +1,10 @@
 package boggle;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
 /**
  * The BoggleGrid class for the first Assignment in CSC207, Fall 2022
  * The BoggleGrid represents the grid on which we play Boggle 
@@ -20,8 +25,13 @@ public class BoggleGrid {
      * @param size  The size of the Boggle grid to initialize
      */
     public BoggleGrid(int size) {
+<<<<<<< HEAD
         this.board = new char[size][size]; //change this!!
         this.size =  size;
+=======
+        this.size = size;
+        this.board = new char[size][size];
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
     }
 
     /* 
@@ -31,6 +41,7 @@ public class BoggleGrid {
      * @param letters a string of letters, one for each grid position.
      */
     public void initalizeBoard(String letters) {
+<<<<<<< HEAD
         int count = 0;
         for (int i = 0; i < Math.pow(this.board.length, 2); i++){
             if (count == this.board.length){
@@ -43,6 +54,21 @@ public class BoggleGrid {
 
 
 
+=======
+        ArrayList<Character> userChars = new ArrayList<Character>();
+
+        for (int i = 0; i < letters.length(); i++){
+            userChars.add(letters.charAt(i));
+        }
+
+        for (int r = 0; r < this.size; r++){
+            for (int c = 0; c < this.size; c++){
+                this.board[r][c] = userChars.remove(0);
+            }
+        }
+    }
+
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
     /*
      * Provide a nice-looking string representation of the grid,
      * so that the user can easily scan it for words.

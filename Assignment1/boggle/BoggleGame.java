@@ -1,5 +1,9 @@
 package boggle;
 
+<<<<<<< HEAD
+=======
+import java.lang.reflect.Array;
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
 import java.util.*;
 
 /**
@@ -136,7 +140,11 @@ public class BoggleGame {
         BoggleGrid grid = new BoggleGrid(size);
         grid.initalizeBoard(letters);
         //step 2. initialize the dictionary of legal words
+<<<<<<< HEAD
         Dictionary boggleDict = new Dictionary("/wordlist.txt"); //you may have to change the path to the wordlist, depending on where you place it.
+=======
+        Dictionary boggleDict = new Dictionary("wordlist.txt"); //you may have to change the path to the wordlist, depending on where you place it.
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
         //step 3. find all legal words on the board, given the dictionary and grid arrangement.
         Map<String, ArrayList<Position>> allWords = new HashMap<String, ArrayList<Position>>();
         findAllWords(allWords, boggleDict, grid);
@@ -158,6 +166,7 @@ public class BoggleGame {
      * @return String a String of random letters (length 16 or 25 depending on the size of the grid)
      */
     private String randomizeLetters(int size){
+<<<<<<< HEAD
         String acc = "";
         if (size*size == 16){
             List<String> small_dice = new ArrayList<>();
@@ -187,6 +196,32 @@ public class BoggleGame {
             }
         }
         return acc;
+=======
+
+        ArrayList<String> small = new ArrayList<String>(Arrays.asList(this.dice_small_grid));
+        ArrayList<String> big = new ArrayList<String>(Arrays.asList((this.dice_big_grid)));
+        Collections.shuffle(small);
+        Collections.shuffle(big);
+
+        String cum = "";
+
+        for (int r = 0; r < size; r++){
+            for (int c = 0; c < size; c++){
+                String randomDie = "";
+                if (size == 16){
+                    randomDie = small.get(0);
+                    small.remove(0);
+                }
+                else{
+                    randomDie = big.get(0);
+                    big.remove(0);
+                }
+                char valueD = randomDie.charAt(new Random().nextInt(randomDie.length()));
+                cum += valueD;
+            }
+        }
+        return cum;
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
     }
 
 
@@ -219,6 +254,7 @@ public class BoggleGame {
      * @param boggleDict A dictionary of legal words
      * @param boggleGrid A boggle grid, with a letter at each position on the grid
      */
+<<<<<<< HEAD
     private void findAllWords(Map<String,ArrayList<Position>> allWords, Dictionary boggleDict, BoggleGrid boggleGrid) {
 
         List<Integer> switchValue = new ArrayList<>();
@@ -299,6 +335,54 @@ public class BoggleGame {
     }
 
     /* 
+=======
+
+    private void findAllWords(Map<String, ArrayList<Position>> allWords, Dictionary boggleDict, BoggleGrid boggleGrid) {
+        ArrayList<ArrayList<Integer>> prePositions2 = new ArrayList<ArrayList<Integer>>();
+        String wrd = "";
+
+        for (int i = 0; i < boggleGrid.numRows(); i++){
+            for (int j = 0; j < boggleGrid.numCols(); j++){
+                findAllWords2(boggleDict, boggleGrid, allWords, wrd, i, j, prePositions2);
+            }
+        }
+    }
+    /*
+    Helper function that is for findall WWords
+    @param boggleDict All Dictonary for all wwords
+    @param boggleGrid grid for boggle
+    @param allWords all words avalabile on word
+    @param wrd current word in string form
+    @param i integer for current row
+    @param j integer for current col
+    @param prePositions2 all previous positions
+
+    */
+    private void findAllWords2(Dictionary boggleDict, BoggleGrid boggleGrid, Map<String, ArrayList<Position>> allWords
+    , String wrd, int i, int j, ArrayList<ArrayList<Integer>> prePositions2){
+        wrd = wrd + boggleGrid.getCharAt(i, j);
+        prePositions2.add(new ArrayList<>(Arrays.asList(i,j)));
+
+        if (boggleDict.containsWord(wrd) && !allWords.containsKey(wrd) && wrd.length() >=4){
+            ArrayList<Position> temp = new ArrayList<>();
+            for (ArrayList<Integer> integers : prePositions2) {
+                temp.add(new Position((integers.get(0)), (integers.get(1))));
+            }
+            allWords.put(wrd, new ArrayList<>(temp));
+        }
+
+        for (int row = i - 1; row <= i + 1 && row < boggleGrid.numRows(); row++) {
+            for (int col = j - 1; col <= j + 1 && col < boggleGrid.numCols(); col++) {
+                if (row >= 0 && col >= 0 && !prePositions2.contains(new ArrayList<>(Arrays.asList(row,col))) && boggleDict.isPrefix(wrd)) {
+                    findAllWords2(boggleDict, boggleGrid, allWords, wrd, row, col, prePositions2);
+                }
+            }
+        }
+        prePositions2.remove(prePositions2.size()-1);
+    }
+
+    /*
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
      * Gets words from the user.  As words are input, check to see that they are valid.
      * If yes, add the word to the player's word list (in boggleStats) and increment
      * the player's score (in boggleStats).
@@ -310,6 +394,7 @@ public class BoggleGame {
     private void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords){
         System.out.println("It's your turn to find some words!");
         while(true) {
+<<<<<<< HEAD
             System.out.println(board.toString());
             System.out.println("Please enter a word (min length 4, max length 8): ");
             String choice = scanner.nextLine().toUpperCase();
@@ -325,6 +410,47 @@ public class BoggleGame {
             if (allWords.containsKey(choice) && !gameStats.getPlayerWords().contains(choice)){
                 gameStats.addWord(choice, BoggleStats.Player.Human);
             }
+=======
+            //You write code here!
+            //step 1. Print the board for the user, so they can scan it for words
+            System.out.println(board.toString());
+
+            //step 2. Get a input (a word) from the user via the console
+            System.out.println("Enter word: ");
+            String humanWord = scanner.nextLine().toUpperCase();
+
+            while ((!allWords.containsKey(humanWord) || this.gameStats.getPlayerWords().contains(humanWord))
+                    && !humanWord.equals("")){
+                System.out.println("not valid word");
+                System.out.println("Enter new word: ");
+                humanWord = scanner.nextLine().toUpperCase();
+                if (humanWord.equals("")){
+                    break;
+                }
+
+            }
+
+            if (humanWord.equals("")){
+                break;
+            }
+
+            if (allWords.containsKey(humanWord)){
+                this.gameStats.addWord(humanWord, BoggleStats.Player.Human);
+            }
+//
+//            while((!allWords.containsKey(humanWord) && !this.gameStats.getPlayerWords().contains(humanWord))
+//                    || !humanWord.matches("[a-zA-Z]+")){
+//                System.out.println("not valid word");
+//                System.out.println("Enter new word: ");
+//                humanWord = scanner.nextLine().toUpperCase();
+//            }
+
+
+            //step 3. Check to see if it is valid (note validity checks should be case-insensitive)
+            //step 4. If it's valid, update the player's word list and score (stored in boggleStats)
+            //step 5. Repeat step 1 - 4
+            //step 6. End when the player hits return (with no word choice).
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
         }
     }
 
@@ -338,11 +464,19 @@ public class BoggleGame {
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
      */
     private void computerMove(Map<String,ArrayList<Position>> all_words){
+<<<<<<< HEAD
         for(String val: gameStats.getPlayerWords()){
             all_words.remove(val);
         }
         for(String val: all_words.keySet()){
             gameStats.addWord(val, BoggleStats.Player.Computer);
+=======
+        ArrayList<String> keySetC = new ArrayList<String>(all_words.keySet());
+        for (int i = 0; i < keySetC.size(); i++){
+            if (!this.gameStats.getPlayerWords().contains(keySetC.get(i))){
+                this.gameStats.addWord(keySetC.get(i), BoggleStats.Player.Computer);
+            }
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
         }
     }
 

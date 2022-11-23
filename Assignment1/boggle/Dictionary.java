@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+<<<<<<< HEAD
+=======
+import java.util.Objects;
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
 import java.util.TreeSet;
 
 /**
@@ -28,7 +32,11 @@ public class Dictionary {
         this.legalWords = new TreeSet<String>();
         try
         {
+<<<<<<< HEAD
             BufferedReader br = new BufferedReader(new FileReader(filename));
+=======
+            BufferedReader br = new BufferedReader(new FileReader("wordlist.txt"));
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
             while ((line = br.readLine()) != null)
             {
                 if (line.strip().length() > 0) {
@@ -61,8 +69,26 @@ public class Dictionary {
      * @param str  The string to check
      * @return  A boolean indicating if the string has been found as a prefix
      */
+<<<<<<< HEAD
     public boolean isPrefix(String str) {
         return this.legalWords.subSet(str.toLowerCase(), str.toLowerCase() + Character.MAX_VALUE).size() != 0;
+=======
+    public boolean isPrefix(String str){
+        String lower = str.toLowerCase();
+        if (this.legalWords.ceiling(lower)==null){
+            return false;
+        }
+        else {
+            return this.legalWords.ceiling(lower).contains(lower);
+        }
+
+//        for (String w: this.legalWords){
+//            if (w.startsWith(lower)){
+//                return true;
+//            }
+//        }
+//        return false;
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
     }
 
 }

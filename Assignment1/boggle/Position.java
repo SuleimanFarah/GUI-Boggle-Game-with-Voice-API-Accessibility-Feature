@@ -38,6 +38,11 @@ public class Position {
      */
     public void setRow(int row) { this.row = row; }
     public void setCol(int col) { this.col = col; }
+<<<<<<< HEAD
     public int getRow() { return this.row; }
     public int getCol() { return this.col; }
+=======
+    public int getRow(int row) { return this.row; }
+    public int getCol(int col) { return this.col; }
+>>>>>>> 7649895676de94dd3a4043b0221c31fe0c509cba
 }
