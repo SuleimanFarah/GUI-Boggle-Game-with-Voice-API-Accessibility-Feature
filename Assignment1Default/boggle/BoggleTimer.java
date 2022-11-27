@@ -20,7 +20,7 @@ public class BoggleTimer{
             @Override
             public void handle(ActionEvent event) {
                 seconds--;
-                DemoView.timerLabel.setText("Countdown: "+seconds.toString());
+                DemoView.timerLabel.setText("Time: "+seconds.toString());
                 if(seconds<=0){
                     terminateGame();
                     time.stop();
