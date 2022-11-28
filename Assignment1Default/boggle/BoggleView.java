@@ -23,9 +23,9 @@ import java.util.Stack;
 
 
 /**
- * Tetris View
+ * Boggle View
  *
- * Based on the Tetris assignment in the Nifty Assignments Database, authored by Nick Parlante
+ * Manages the GUI Component of the group project and is the view in the mock Model-View-Controller model.
  */
 public class BoggleView {
 
@@ -85,55 +85,43 @@ public class BoggleView {
 
         final ToggleGroup toggleGroup = new ToggleGroup();
 
-        RadioButton pilotButtonHuman = new RadioButton("4x4 (Default)");
-        pilotButtonHuman.setToggleGroup(toggleGroup);
-        pilotButtonHuman.setSelected(true);
-        pilotButtonHuman.setUserData(Color.SALMON);
-        pilotButtonHuman.setFont(new Font(16));
-        pilotButtonHuman.setStyle("-fx-text-fill: #e8e6e3");
+        RadioButton gridType = new RadioButton("4x4 (Default)");
+        gridType.setToggleGroup(toggleGroup);
+        gridType.setSelected(true);
+        gridType.setUserData(Color.SALMON);
+        gridType.setFont(new Font(16));
+        gridType.setStyle("-fx-text-fill: #e8e6e3");
 
-        RadioButton pilotButtonComputer = new RadioButton("Computer (Default)");
-        pilotButtonComputer.setToggleGroup(toggleGroup);
-        pilotButtonComputer.setUserData(Color.SALMON);
-        pilotButtonComputer.setFont(new Font(16));
-        pilotButtonComputer.setStyle("-fx-text-fill: #e8e6e3");
+        RadioButton gridType2 = new RadioButton("5x5");
+        gridType2.setToggleGroup(toggleGroup);
+        gridType2.setUserData(Color.SALMON);
+        gridType2.setFont(new Font(16));
+        gridType2.setStyle("-fx-text-fill: #e8e6e3");
 
         scoreLabel.setText("Score is: 0");
         scoreLabel.setFont(new Font(20));
         scoreLabel.setStyle("-fx-text-fill: #e8e6e3");
 
         //add buttons
-        startButton = new Button("Start");
-        startButton.setId("Start");
-        startButton.setPrefSize(150, 50);
-        startButton.setFont(new Font(12));
-        startButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+        newGame = new Button("New Game");
+        newGame.setId("newGame");
+        newGame.setPrefSize(150, 50);
+        newGame.setFont(new Font(12));
+        newGame.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-        stopButton = new Button("Stop");
-        stopButton.setId("Start");
-        stopButton.setPrefSize(150, 50);
-        stopButton.setFont(new Font(12));
-        stopButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+        endGame = new Button("End Game");
+        endGame.setId("endGame");
+        endGame.setPrefSize(150, 50);
+        endGame.setFont(new Font(12));
+        endGame.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-        saveButton = new Button("Save");
-        saveButton.setId("Save");
-        saveButton.setPrefSize(150, 50);
-        saveButton.setFont(new Font(12));
-        saveButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+        muteMusic = new Button("Mute Music");
+        muteMusic.setId("Save");
+        muteMusic.setPrefSize(150, 50);
+        muteMusic.setFont(new Font(12));
+        muteMusic.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
-        loadButton = new Button("Load");
-        loadButton.setId("Load");
-        loadButton.setPrefSize(150, 50);
-        loadButton.setFont(new Font(12));
-        loadButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
-
-        newButton = new Button("New Game");
-        newButton.setId("New");
-        newButton.setPrefSize(150, 50);
-        newButton.setFont(new Font(12));
-        newButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
-
-        HBox controls = new HBox(20, saveButton, loadButton, newButton, startButton, stopButton);
+        HBox controls = new HBox(20, newGame, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
@@ -145,65 +133,33 @@ public class BoggleView {
         vBox.setPadding(new Insets(20, 20, 20, 20));
         vBox.setAlignment(Pos.TOP_CENTER);
 
-        VBox scoreBox = new VBox(20, scoreLabel, gameModeLabel, pilotButtonHuman, pilotButtonComputer);
+        VBox scoreBox = new VBox(20, scoreLabel, gridTypelabel, gridType, gridType2);
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         vBox.setAlignment(Pos.TOP_CENTER);
 
-        toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapPilot(newVal));
+        toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
 
-        //timeline structures the animation, and speed between application "ticks"
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.25), e -> updateBoard()));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
 
-        //configure this such that you start a new game when the user hits the newButton
-        //Make sure to return the focus to the borderPane once you're done!
-        newButton.setOnAction(e -> {
-            this.model.newGame();
+        //Although this is the same as endGame, all the appropriate scores are reset but are do not need to be dispayed to the user.
+        newGame.setOnAction(e -> {
+            System.out.println("new game!");
             borderPane.requestFocus();
         });
 
-        //configure this such that you restart the game when the user hits the startButton
-        //Make sure to return the focus to the borderPane once you're done!
-        startButton.setOnAction(e -> {
-            this.paused = false;
+        //Once this button is clicked the model should be called to end game. The scores are announced on the screen while the game summary
+        //is printed in the terminal
+        endGame.setOnAction(e -> {
+            System.out.println("end game!");
             borderPane.requestFocus();
         });
 
-        //configure this such that you pause the game when the user hits the stopButton
-        //Make sure to return the focus to the borderPane once you're done!
-        stopButton.setOnAction(e -> {
-            this.paused = true;
+        //Configures this such that it mutes the music playing in the game during launch.
+        muteMusic.setOnAction(e -> {
+            //mute music code
+            System.out.println("mute music!");
             borderPane.requestFocus();
         });
 
-        //configure this such that the save view pops up when the saveButton is pressed.
-        //Make sure to return the focus to the borderPane once you're done!
-        saveButton.setOnAction(e -> {
-            createSaveView();
-            borderPane.requestFocus();
-        });
-
-        //configure this such that the load view pops up when the loadButton is pressed.
-        //Make sure to return the focus to the borderPane once you're done!
-        loadButton.setOnAction(e -> {
-            createLoadView();
-            borderPane.requestFocus();
-        });
-
-        //configure this such that you adjust the speed of the timeline to a value that
-        //ranges between 0 and 3 times the default rate per model tick.  Make sure to return the
-        //focus to the borderPane once you're done!
-        slider.setOnMouseReleased(e -> {
-            if(slider.getValue() == 0){
-                timeline.setRate(1);
-            } else {
-                timeline.setRate(3 * slider.getValue()/100);
-            }
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
-            borderPane.requestFocus();
-        });
 
         //configure this such that you can use controls to rotate and place pieces as you like!!
         //You'll want to respond to tie key presses to these moves:
@@ -211,22 +167,6 @@ public class BoggleView {
         //and TetrisModel.MoveType.RIGHT
         //make sure that you don't let the human control the board
         //if the autopilot is on, however.
-        borderPane.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent k) {
-                if (!model.getAutoPilotMode()) {
-                    if(k.getCode() == KeyCode.UP){
-                        model.modelTick(TetrisModel.MoveType.ROTATE);
-                    } else if (k.getCode() == KeyCode.DOWN) {
-                        model.modelTick(TetrisModel.MoveType.DROP);
-                    }else if(k.getCode() == KeyCode.LEFT){
-                        model.modelTick(TetrisModel.MoveType.LEFT);
-                    }else if(k.getCode() == KeyCode.RIGHT){
-                        model.modelTick(TetrisModel.MoveType.RIGHT);
-                    }
-                }
-            }
-        });
 
         borderPane.setTop(controls);
         borderPane.setRight(scoreBox);
@@ -259,20 +199,15 @@ public class BoggleView {
      * Create a line between the most recent button pressed and the last.
      */
     private void buttonLineSelection(int x, int y) {
-        if (this.paused != true) {
-            paintBoard();
-            this.model.modelTick(TetrisModel.MoveType.DOWN);
-            updateScore();
-        }
+        //to be created in later sprint
     }
 
     /**
      * Update score on UI
      */
     private void updateScore() {
-        if (this.paused != true) {
-            scoreLabel.setText("Score is: " + model.getScore() + "\nPieces placed:" + model.getCount());
-        }
+
+        scoreLabel.setText("Score is: " + model.getScore());
     }
 
     /**
