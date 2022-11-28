@@ -29,7 +29,7 @@ public class Dictionary {
         this.legalWords = new TreeSet<String>();
         try
         {
-            BufferedReader br = new BufferedReader(new FileReader("wordlist.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("./Assignment1Default/wordlist.txt"));
             while ((line = br.readLine()) != null)
             {
                 if (line.strip().length() > 0) {
