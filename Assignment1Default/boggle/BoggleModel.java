@@ -10,7 +10,7 @@ public class BoggleModel {
     public BoggleModel(){
         this.stats = new BoggleStats();
         this.baseGrid = new BoggleGrid(4); //default grid size is 4x4
-        this.size =
+        this.size = 4;
         this.bogDict = new Dictionary("/Users/sfarah/TSDC/Assignment1Default/wordlist.txt"); //change path references where appropriate
         this.humanGuess = "";
     }
@@ -42,5 +42,15 @@ public class BoggleModel {
     }
 
 
+    public int getScore() {
+        return getStats().getScore();
+    }
 
+    public BoggleStats getStats(){
+        return this.stats;
+    }
+
+    public BoggleGrid getGrid(){
+        return this.baseGrid;
+    }
 }

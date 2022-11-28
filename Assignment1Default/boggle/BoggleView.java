@@ -206,61 +206,6 @@ public class BoggleView {
      * Update score on UI
      */
     private void updateScore() {
-
         scoreLabel.setText("Score is: " + model.getScore());
-    }
-
-    /**
-     * Methods to calibrate sizes of pixels relative to board size
-     */
-    private final int yPixel(int y) {
-        return (int) Math.round(this.height -1 - (y+1)*dY());
-    }
-    //    private final int xPixel(int x) {
-//        return (int) Math.round(this.width -1 - (x+1)*dX());
-//    }
-    private final int xPixel(int x) {return (int) Math.round((x)*dX());}
-    private final float dX() {
-        return( ((float)(this.width-2)) / this.model.getBoard().getWidth() );
-    }
-    private final float dY() {
-        return( ((float)(this.height-2)) / this.model.getBoard().getHeight() );
-    }
-
-    /**
-     * Draw the board
-     */
-    public void paintBoard() {
-
-        // Draw a rectangle around the whole screen
-        gc.setStroke(Color.GREEN);
-        gc.setFill(Color.GREEN);
-        gc.fillRect(0, 0, this.width-1, this.height-1);
-
-        // Draw the line separating the top area on the screen
-        gc.setStroke(Color.BLACK);
-        int spacerY = yPixel(this.model.getBoard().getHeight() - this.model.BUFFERZONE - 1);
-        gc.strokeLine(0, spacerY, this.width-1, spacerY);
-
-        // Factor a few things out to help the optimizer
-        final int dx = Math.round(dX()-2);
-        final int dy = Math.round(dY()-2);
-        final int bWidth = this.model.getBoard().getWidth();
-
-        int x, y;
-        // Loop through and draw all the blocks; sizes of blocks are calibrated relative to screen size
-        for (x=0; x<bWidth; x++) {
-            int left = xPixel(x);	// the left pixel
-            // draw from 0 up to the col height
-            final int yHeight = this.model.getBoard().getColumnHeight(x);
-            for (y=0; y<yHeight; y++) {
-                if (this.model.getBoard().getGrid(x, y)) {
-                    gc.setFill(Color.RED);
-                    gc.fillRect(left+1, yPixel(y)+1, dx, dy);
-                    gc.setFill(Color.GREEN);
-                }
-            }
-        }
-
     }
 }
