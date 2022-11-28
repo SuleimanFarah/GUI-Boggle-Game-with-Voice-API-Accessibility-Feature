@@ -1,2 +1,4 @@
-package boggle;public class BoggleModel {
+package boggle;
+
+public class BoggleModel {
 }
