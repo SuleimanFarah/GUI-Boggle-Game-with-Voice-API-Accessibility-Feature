@@ -12,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -37,10 +38,17 @@ public class BoggleView {
     Label scoreLabel = new Label("");
     Label gridTypelabel = new Label("");
 
-    ArrayList<Button> buttonList;
+    RadioButton gridType; //4x4 boggle grid radio button
+    RadioButton gridType2; //5x5 boggle grid radio button
+
+    ArrayList<Button> buttonList; // list of grid buttons (interacted with to engage with boggle)
     BorderPane borderPane;
     Canvas canvas;
     GraphicsContext gc; //the graphics context will be linked to the canvas
+
+    HBox controls;
+
+    VBox scoreBox;
 
     private Stack<Object> undoStack; //undo stack, to facilitate drawing/erasing of graphics objects
 
@@ -87,7 +95,7 @@ public class BoggleView {
 
         final ToggleGroup toggleGroup = new ToggleGroup();
 
-        RadioButton gridType = new RadioButton("4x4 (Default)");
+        RadioButton gridType = new RadioButton("4x4");
         gridType.setToggleGroup(toggleGroup);
         gridType.setSelected(true);
         gridType.setUserData(Color.SALMON);
@@ -149,20 +157,26 @@ public class BoggleView {
             System.out.println("mute music!");
             borderPane.requestFocus();
         });
+        buttonArrayList();
+        addButtonsToCanvas();
 
+        GridPane gridPane = addButtonsToCanvas();
+
+        borderPane.setCenter(gridPane);
         borderPane.setTop(controls);
         borderPane.setRight(scoreBox);
-        borderPane.setCenter(canvas);
 
-        
+//        gc.setStroke(Color.BLANCHEDALMOND);
+//        gc.setFill(Color.CORAL);
+//        gc.fillRect(150, 20, this.width, this.height);
+
+
 
         var scene = new Scene(borderPane, 800, 600);
         this.stage.setScene(scene);
         this.stage.show();
 
-        gc.setStroke(Color.BLANCHEDALMOND);
-        gc.setFill(Color.CORAL);
-        gc.fillRect(150, 20, this.width, this.height);
+
     }
 
     /**
@@ -173,20 +187,22 @@ public class BoggleView {
     private void swapGridType(Toggle val){
         RadioButton state = (RadioButton)val.getToggleGroup().getSelectedToggle();
         String stateText = state.getText();
-        if(stateText.equals("4x4 (Default)")){
-            gridTypelabel.setText("GridType: 4x4 (Default)");
+        if(stateText.equals("4x4")){
+            gridTypelabel.setText("GridType: 4x4");
+            buttonList.clear();
             this.model.changeGridSize(4);
-            buttonArrayList();
-            addButtonsToCanvas();
             //change grid type from the model
         }else if(stateText.equals("5x5")){
             gridTypelabel.setText("GridType: 5x5");
+            buttonList.clear();
             this.model.changeGridSize(5);
-            buttonArrayList();
-            addButtonsToCanvas();
             //change grid type from the model (also end the game before doing so)
         }
+        buttonArrayList();
+        GridPane g = addButtonsToCanvas();
+        borderPane.setCenter(g);
     }
+
 
     /**
      * This function edits the existing button arraylist with a new set of gridSize x gridSize buttons to be displayed.
@@ -219,25 +235,27 @@ public class BoggleView {
 
     /**
      * Using the class attribute for button arraylist, add all buttons into the canvas in a manner
-     * appropriate to its grid size.
+     * appropriate to its grid size. The function should return a gridpane which is to be displayed on the screen.
+     * @return GridPane gPane
      */
-    private void addButtonsToCanvas(){
-        if (model.getGrid().numCols() == 4){ //if the grid is a 4x4
-            int count = 0;
-            for(Button values: this.buttonList.stream().toList()){
-                values.setPrefSize(180, 100);
-                values.setLayoutX(Math.floor(count/4) * 180);
-                values.setLayoutY(Math.floor(count/4) * 100);
-                count++;
+    private GridPane addButtonsToCanvas(){
+        int count = 0;
+        GridPane gPane = new GridPane();
+        if (buttonList.size() == 16){
+            for(int i = 0; i<4; i++){
+                for(int j = 0; j < 4; j++){
+                    gPane.add(buttonList.get(count), i,j);
+                    count++;
+                }
             }
-        }else{ // if the grid is 5x5
-            int count = 0;
-            for(Button values: this.buttonList.stream().toList()){
-                values.setPrefSize(180, 100);
-                values.setLayoutX(Math.floor(count/5) * 180);
-                values.setLayoutY(Math.floor(count/5) * 100);
-                count++;
+        }else{
+            for(int i = 0; i<5; i++){
+                for(int j = 0; j < 5; j++){
+                    gPane.add(buttonList.get(count), i,j);
+                    count++;
+                }
             }
         }
+        return gPane;
     }
 }

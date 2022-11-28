@@ -10,10 +10,11 @@ public class BoggleModel {
 
     private String humanGuess;
     public BoggleModel(){
-        this.stats = new BoggleStats();
-        this.baseGrid = new BoggleGrid(4); //default grid size is 4x4
         this.size = 4;
+        this.stats = new BoggleStats();
+        this.baseGrid = new BoggleGrid(this.size); //default grid size is 4x4
         this.boggleGame = new BoggleGame();
+        this.baseGrid.initalizeBoard(this.boggleGame.randomizeLetters(this.size));
         this.bogDict = new Dictionary("/Users/sfarah/TSDC/Assignment1Default/wordlist.txt"); //change path references where appropriate
         this.humanGuess = "";
     }
