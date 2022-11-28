@@ -158,7 +158,7 @@ public class BoggleGame {
      *
      * @return String a String of random letters (length 16 or 25 depending on the size of the grid)
      */
-    private String randomizeLetters(int size){
+    public String randomizeLetters(int size){
 
         ArrayList<String> small = new ArrayList<String>(Arrays.asList(this.dice_small_grid));
         ArrayList<String> big = new ArrayList<String>(Arrays.asList((this.dice_big_grid)));

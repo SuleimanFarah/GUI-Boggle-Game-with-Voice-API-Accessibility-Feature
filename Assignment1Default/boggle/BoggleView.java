@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 
@@ -36,6 +37,7 @@ public class BoggleView {
     Label scoreLabel = new Label("");
     Label gridTypelabel = new Label("");
 
+    ArrayList<Button> buttonList;
     BorderPane borderPane;
     Canvas canvas;
     GraphicsContext gc; //the graphics context will be linked to the canvas
@@ -55,6 +57,7 @@ public class BoggleView {
     public BoggleView(BoggleModel model, Stage stage) {
         this.model = model;
         this.stage = stage;
+        this.buttonList = new ArrayList<>();
         initUI();
     }
 
@@ -63,11 +66,10 @@ public class BoggleView {
      */
     private void initUI() {
         this.stage.setTitle("TSDC Boggle");
-        this.width = 500;
-        this.height = 650;
+        this.width = 600;
+        this.height = 500;
 
         borderPane = new BorderPane();
-        borderPane.setStyle("-fx-background-color: #121212;");
 
         //add canvas
         canvas = new Canvas(this.width, this.height);
@@ -79,9 +81,9 @@ public class BoggleView {
         scoreLabel.setId("ScoreLabel");
 
         gridTypelabel.setText("GridType: 4x4");
-        gridTypelabel.setMinWidth(250);
+        gridTypelabel.setMinWidth(50);
         gridTypelabel.setFont(new Font(20));
-        gridTypelabel.setStyle("-fx-text-fill: #e8e6e3");
+
 
         final ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -90,52 +92,40 @@ public class BoggleView {
         gridType.setSelected(true);
         gridType.setUserData(Color.SALMON);
         gridType.setFont(new Font(16));
-        gridType.setStyle("-fx-text-fill: #e8e6e3");
 
         RadioButton gridType2 = new RadioButton("5x5");
         gridType2.setToggleGroup(toggleGroup);
         gridType2.setUserData(Color.SALMON);
         gridType2.setFont(new Font(16));
-        gridType2.setStyle("-fx-text-fill: #e8e6e3");
 
         scoreLabel.setText("Score is: 0");
         scoreLabel.setFont(new Font(20));
-        scoreLabel.setStyle("-fx-text-fill: #e8e6e3");
 
         //add buttons
         newGame = new Button("New Game");
         newGame.setId("newGame");
         newGame.setPrefSize(150, 50);
         newGame.setFont(new Font(12));
-        newGame.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         endGame = new Button("End Game");
         endGame.setId("endGame");
         endGame.setPrefSize(150, 50);
         endGame.setFont(new Font(12));
-        endGame.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         muteMusic = new Button("Mute Music");
         muteMusic.setId("Save");
         muteMusic.setPrefSize(150, 50);
         muteMusic.setFont(new Font(12));
-        muteMusic.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
 
         HBox controls = new HBox(20, newGame, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
-        Slider slider = new Slider(0, 100, 50);
-        slider.setShowTickLabels(true);
-        slider.setStyle("-fx-control-inner-background: palegreen;");
 
-        VBox vBox = new VBox(20, slider);
-        vBox.setPadding(new Insets(20, 20, 20, 20));
-        vBox.setAlignment(Pos.TOP_CENTER);
 
         VBox scoreBox = new VBox(20, scoreLabel, gridTypelabel, gridType, gridType2);
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
-        vBox.setAlignment(Pos.TOP_CENTER);
+        scoreBox.setAlignment(Pos.TOP_CENTER);
 
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
 
@@ -160,22 +150,19 @@ public class BoggleView {
             borderPane.requestFocus();
         });
 
-
-        //configure this such that you can use controls to rotate and place pieces as you like!!
-        //You'll want to respond to tie key presses to these moves:
-        // TetrisModel.MoveType.DROP, TetrisModel.MoveType.ROTATE, TetrisModel.MoveType.LEFT
-        //and TetrisModel.MoveType.RIGHT
-        //make sure that you don't let the human control the board
-        //if the autopilot is on, however.
-
         borderPane.setTop(controls);
         borderPane.setRight(scoreBox);
         borderPane.setCenter(canvas);
-        borderPane.setBottom(vBox);
 
-        var scene = new Scene(borderPane, 800, 800);
+        
+
+        var scene = new Scene(borderPane, 800, 600);
         this.stage.setScene(scene);
         this.stage.show();
+
+        gc.setStroke(Color.BLANCHEDALMOND);
+        gc.setFill(Color.CORAL);
+        gc.fillRect(150, 20, this.width, this.height);
     }
 
     /**
@@ -188,16 +175,37 @@ public class BoggleView {
         String stateText = state.getText();
         if(stateText.equals("4x4 (Default)")){
             gridTypelabel.setText("GridType: 4x4 (Default)");
+            this.model.changeGridSize(4);
+            buttonArrayList();
+            addButtonsToCanvas();
             //change grid type from the model
         }else if(stateText.equals("5x5")){
             gridTypelabel.setText("GridType: 5x5");
+            this.model.changeGridSize(5);
+            buttonArrayList();
+            addButtonsToCanvas();
             //change grid type from the model (also end the game before doing so)
         }
     }
 
     /**
-     * Create a line between the most recent button pressed and the last.
+     * This function edits the existing button arraylist with a new set of gridSize x gridSize buttons to be displayed.
      */
+    private void buttonArrayList(){
+        int size = this.model.getGrid().numCols();
+        this.buttonList.clear();
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                this.buttonList.add(new Button(Character.toString(this.model.getGrid().getCharAt(i,j))));
+            }
+        }
+    }
+
+    /**
+     * Create a line between the most recent button pressed and the last.
+     * @param x, y
+     **/
+
     private void buttonLineSelection(int x, int y) {
         //to be created in later sprint
     }
@@ -207,5 +215,29 @@ public class BoggleView {
      */
     private void updateScore() {
         scoreLabel.setText("Score is: " + model.getScore());
+    }
+
+    /**
+     * Using the class attribute for button arraylist, add all buttons into the canvas in a manner
+     * appropriate to its grid size.
+     */
+    private void addButtonsToCanvas(){
+        if (model.getGrid().numCols() == 4){ //if the grid is a 4x4
+            int count = 0;
+            for(Button values: this.buttonList.stream().toList()){
+                values.setPrefSize(180, 100);
+                values.setLayoutX(Math.floor(count/4) * 180);
+                values.setLayoutY(Math.floor(count/4) * 100);
+                count++;
+            }
+        }else{ // if the grid is 5x5
+            int count = 0;
+            for(Button values: this.buttonList.stream().toList()){
+                values.setPrefSize(180, 100);
+                values.setLayoutX(Math.floor(count/5) * 180);
+                values.setLayoutY(Math.floor(count/5) * 100);
+                count++;
+            }
+        }
     }
 }
