@@ -36,7 +36,7 @@ public class BoggleTimer{
         time.play();
     }
     //function for adding time whenever correct words has been inputted.
-    private void AddTimer(){
+    public void AddTimer(){
         seconds += 5;
     }
         private void terminateGame(){
