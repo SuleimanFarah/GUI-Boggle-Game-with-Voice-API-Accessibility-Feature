@@ -2,6 +2,7 @@ package boggle;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -46,7 +47,9 @@ public class BoggleView {
     Canvas canvas;
     GraphicsContext gc; //the graphics context will be linked to the canvas
 
-    HBox controls;
+
+
+    HBox controls; //Segmented gui components used to organize the BorderPane.
 
     VBox scoreBox;
 
@@ -161,7 +164,7 @@ public class BoggleView {
         addButtonsToCanvas();
 
         GridPane gridPane = addButtonsToCanvas();
-
+        gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
         borderPane.setTop(controls);
         borderPane.setRight(scoreBox);
@@ -200,6 +203,7 @@ public class BoggleView {
         }
         buttonArrayList();
         GridPane g = addButtonsToCanvas();
+        g.setAlignment(Pos.CENTER);
         borderPane.setCenter(g);
     }
 
@@ -212,7 +216,16 @@ public class BoggleView {
         this.buttonList.clear();
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                this.buttonList.add(new Button(Character.toString(this.model.getGrid().getCharAt(i,j))));
+                Button button = new Button(Character.toString(this.model.getGrid().getCharAt(i,j)));
+                button.prefHeight(300);
+                button.maxHeight(300);
+                button.prefWidth(300);
+                button.maxHeight(300);
+                button.setOnAction(e -> {
+                   System.out.println(button.getText());
+                });
+                this.buttonList.add(button);
+
             }
         }
     }
@@ -241,6 +254,10 @@ public class BoggleView {
     private GridPane addButtonsToCanvas(){
         int count = 0;
         GridPane gPane = new GridPane();
+        gPane.setPrefHeight(500);
+        gPane.setMaxHeight(500);
+        gPane.setPrefWidth(500);
+        gPane.setMaxWidth(500);
         if (buttonList.size() == 16){
             for(int i = 0; i<4; i++){
                 for(int j = 0; j < 4; j++){
