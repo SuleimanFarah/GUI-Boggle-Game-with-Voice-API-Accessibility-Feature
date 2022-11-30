@@ -1,6 +1,5 @@
 package boggle;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -141,10 +140,15 @@ public class BoggleGame {
         //step 3. find all legal words on the board, given the dictionary and grid arrangement.
         Map<String, ArrayList<Position>> allWords = new HashMap<String, ArrayList<Position>>();
         findAllWords(allWords, boggleDict, grid);
+        System.out.println("Enter 1 for easy (default), 2 (medium), 3(hard)");
+        String chooseDif = scanner.nextLine();
+        if (!chooseDif.equals("1") && !chooseDif.equals("2") && !chooseDif.equals("3")){
+            chooseDif = "1";
+        }
         //step 4. allow the user to try to find some words on the grid
         humanMove(grid, allWords);
         //step 5. allow the computer to identify remaining words
-        computerMove(allWords);
+        computerMove(allWords, chooseDif);
     }
 
     /*
@@ -326,10 +330,18 @@ public class BoggleGame {
      * computer's score (stored in boggleStats).
      *
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
+     * @param chooseDif the choosen difficulty of the computer by the human (1=easy,2=medium,3=hard)
      */
-    private void computerMove(Map<String,ArrayList<Position>> all_words){
+    private void computerMove(Map<String,ArrayList<Position>> all_words, String chooseDif){
         ArrayList<String> keySetC = new ArrayList<String>(all_words.keySet());
-        for (int i = 0; i < keySetC.size(); i++){
+        int size = (keySetC.size()/3);
+        if (chooseDif.equals("2")){
+            size = keySetC.size()/2;
+        }
+        else if (chooseDif.equals("3")){
+            size = keySetC.size();
+        }
+        for (int i = 0; i < size; i++){
             if (!this.gameStats.getPlayerWords().contains(keySetC.get(i))){
                 this.gameStats.addWord(keySetC.get(i), BoggleStats.Player.Computer);
             }
