@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/out/production/TSDC/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TSDC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TSDC.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/BoggleMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/TSDC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/TSDC.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleGame.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="douglasBranch" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/firstFile.txt" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2I1Q6W3b925dNv7n9Gm9CcbHwmA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/jose/CSC207/quandoug/javafx-sdk-19/lib/javafx.web.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.DemoBoggleApp">
+    <configuration name="BoggleMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BoggleMain" />
+      <module name="TSDC" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoggleTimer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="boggle.BoggleTimer" />
+      <module name="TSDC" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/../CSC207/quandoug/javafx-sdk-19/lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="boggle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DemoBoggleApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="boggle.DemoBoggleApp" />
+      <module name="TSDC" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/../CSC207/quandoug/javafx-sdk-19/lib&quot; --add-modules javafx.controls,javafx.fxml " />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="boggle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="boggle.BoggleMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="boggle.BoggleMain" />
+      <module name="TSDC" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/../CSC207/quandoug/javafx-sdk-19/lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="boggle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.boggle.BoggleMain" />
+      <item itemvalue="Application.BoggleMain" />
+      <item itemvalue="Application.BoggleTimer" />
+      <item itemvalue="Application.DemoBoggleApp" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.DemoBoggleApp" />
+        <item itemvalue="Application.boggle.BoggleMain" />
+        <item itemvalue="Application.BoggleMain" />
+        <item itemvalue="Application.BoggleTimer" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="" />
+      <created>1669346434677</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1669346434677</updated>
+      <workItem from="1669346435899" duration="7026000" />
+      <workItem from="1669521332094" duration="4965000" />
+      <workItem from="1669579856465" duration="9577000" />
+      <workItem from="1669682543153" duration="912000" />
+      <workItem from="1669758334967" duration="7000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
