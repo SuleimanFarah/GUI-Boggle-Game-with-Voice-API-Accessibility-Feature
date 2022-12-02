@@ -30,6 +30,8 @@ public class BoggleGame {
                     "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDLNOR", "DDHNOT", "DHHLOR",
                     "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
 
+    private String difficulty = "hard";
+
     /* 
      * BoggleGame constructor
      */
@@ -148,7 +150,7 @@ public class BoggleGame {
         //step 4. allow the user to try to find some words on the grid
         humanMove(grid, allWords);
         //step 5. allow the computer to identify remaining words
-        computerMove(allWords, chooseDif);
+        computerMove(allWords);
     }
 
     /*
@@ -332,13 +334,13 @@ public class BoggleGame {
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
      * @param chooseDif the choosen difficulty of the computer by the human (1=easy,2=medium,3=hard)
      */
-    private void computerMove(Map<String,ArrayList<Position>> all_words, String chooseDif){
+    private void computerMove(Map<String,ArrayList<Position>> all_words){
         ArrayList<String> keySetC = new ArrayList<String>(all_words.keySet());
         int size = (keySetC.size()/3);
-        if (chooseDif.equals("2")){
+        if (difficulty.equals("medium")){
             size = keySetC.size()/2;
         }
-        else if (chooseDif.equals("3")){
+        else if (difficulty.equals("hard")){
             size = keySetC.size();
         }
         for (int i = 0; i < size; i++){
@@ -358,6 +360,10 @@ public class BoggleGame {
             return allWords.keySet().toArray()[n].toString().substring(0,2);
         }
         return allWords.keySet().toArray()[n].toString().substring(0,3);
+    }
+
+    public void setDif(String Dif){
+        this.difficulty = Dif;
     }
 
 }

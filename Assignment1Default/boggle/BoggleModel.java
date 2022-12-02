@@ -48,6 +48,9 @@ public class BoggleModel {
         System.out.println(this.baseGrid);
     }
 
+    public void setDiffuclty(String diffuclty){
+        this.boggleGame.setDif(diffuclty);
+    }
 
     public int getScore() {
         return getStats().getScore();

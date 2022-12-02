@@ -36,10 +36,16 @@ public class BoggleView {
 
     Button newGame, endGame, muteMusic; //buttons for functions
     Label scoreLabel = new Label("");
+    Label incorrectWordsLabel = new Label("");
     Label gridTypelabel = new Label("");
+    Label difTypeLabel = new Label("");
 
     RadioButton gridType; //4x4 boggle grid radio button
     RadioButton gridType2; //5x5 boggle grid radio button
+
+    RadioButton diffType1; //easy
+    RadioButton diffType2; //medium
+    RadioButton diffType3; //hard
 
     ArrayList<Button> buttonList; // list of grid buttons (interacted with to engage with boggle)
     BorderPane borderPane;
@@ -87,6 +93,7 @@ public class BoggleView {
         //labels
         gridTypelabel.setId("GameModeLabel");
         scoreLabel.setId("ScoreLabel");
+        incorrectWordsLabel.setId("IncorrectWordsLabel");
 
         gridTypelabel.setText("GridType: 4x4");
         gridTypelabel.setMinWidth(50);
@@ -109,6 +116,9 @@ public class BoggleView {
         scoreLabel.setText("Score is: 0");
         scoreLabel.setFont(new Font(20));
 
+        incorrectWordsLabel.setText("IncorrectWords: 0");
+        incorrectWordsLabel.setFont(new Font(20));
+
         //add buttons
         newGame = new Button("New Game");
         newGame.setId("newGame");
@@ -125,17 +135,39 @@ public class BoggleView {
         muteMusic.setPrefSize(150, 50);
         muteMusic.setFont(new Font(12));
 
+        difTypeLabel.setText("Difficulty:");
+        difTypeLabel.setMinWidth(50);
+        difTypeLabel.setFont(new Font(20));
+
+        final ToggleGroup toggleGroup2 = new ToggleGroup();
+
+        RadioButton diffType1 = new RadioButton("easy");
+        diffType1.setToggleGroup(toggleGroup2);
+        diffType1.setSelected(true);
+        diffType1.setUserData(Color.SALMON);
+        diffType1.setFont(new Font(16));
+
+        RadioButton diffType2 = new RadioButton("medium");
+        diffType2.setToggleGroup(toggleGroup2);
+        diffType2.setUserData(Color.SALMON);
+        diffType2.setFont(new Font(16));
+
+        RadioButton diffType3 = new RadioButton("hard");
+        diffType3.setToggleGroup(toggleGroup2);
+        diffType3.setUserData(Color.SALMON);
+        diffType3.setFont(new Font(16));
+
         HBox controls = new HBox(20, newGame, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
 
-
-        VBox scoreBox = new VBox(20, scoreLabel, gridTypelabel, gridType, gridType2);
+        VBox scoreBox = new VBox(20, scoreLabel, incorrectWordsLabel, gridTypelabel, gridType, gridType2, difTypeLabel, diffType1, diffType2, diffType3);
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         scoreBox.setAlignment(Pos.TOP_CENTER);
 
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
+        toggleGroup2.selectedToggleProperty().addListener((observable, oldVal, newVal) -> setDifficult(newVal));
 
 
         //Although this is the same as endGame, all the appropriate scores are reset but are do not need to be dispayed to the user.
@@ -198,6 +230,34 @@ public class BoggleView {
             this.model.changeGridSize(5);
             //change grid type from the model (also end the game before doing so)
         }
+        buttonArrayList();
+        GridPane g = addButtonsToCanvas();
+        borderPane.setCenter(g);
+    }
+
+    private void setDifficult(Toggle val){
+        RadioButton state = (RadioButton)val.getToggleGroup().getSelectedToggle();
+        String stateText = state.getText();
+        switch (stateText) {
+            case "easy" -> {
+                difTypeLabel.setText("Difficulty: EASY");
+                this.model.setDiffuclty("easy");
+                buttonList.clear();
+            }
+            //change grid type from the model
+            case "medium" -> {
+                difTypeLabel.setText("Difficulty: MEDIUM");
+                this.model.setDiffuclty("medium");
+                buttonList.clear();
+            }
+            //change grid type from the model (also end the game before doing so)
+            case "hard" -> {
+                difTypeLabel.setText("Difficulty: HARD");
+                this.model.setDiffuclty("hard");
+                buttonList.clear();
+            }
+        }
+
         buttonArrayList();
         GridPane g = addButtonsToCanvas();
         borderPane.setCenter(g);
