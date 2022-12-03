@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="Merged timer to BoggleView">
-      <change afterPath="$PROJECT_DIR$/Assignment1Default/boggle/Voice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleTimer.java" afterDir="false" />
+    <list default="true" id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="Added TTS for instructions">
       <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSDC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TSDC.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/TSDC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/TSDC.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleTimer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleTimer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleTimer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleTimer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/DemoBoggleApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/DemoView.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/testing.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +46,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "18",
-    "last_opened_file_path": "/home/jose/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmulex.jar",
+    "last_opened_file_path": "/home/jose/Downloads/freetts-1.2.2-bin/freetts-1.2/lib",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
@@ -152,7 +138,7 @@
       <workItem from="1669579856465" duration="9577000" />
       <workItem from="1669682543153" duration="912000" />
       <workItem from="1669758334967" duration="7000" />
-      <workItem from="1670011850813" duration="20277000" />
+      <workItem from="1670011850813" duration="25566000" />
     </task>
     <task id="LOCAL-00001" summary="Merged timer to BoggleView">
       <created>1670015593877</created>
@@ -161,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670015593877</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added TTS for instructions">
+      <created>1670044110699</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1670044110699</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,9 +173,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merged timer to BoggleView" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merged timer to BoggleView" />
+    <MESSAGE value="Added TTS for instructions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added TTS for instructions" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ClassCastException" package="java.lang" />
+          <option name="timeStamp" value="6" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.io.IOException" memberName="detailMessage" />

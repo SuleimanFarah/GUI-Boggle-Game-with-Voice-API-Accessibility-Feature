@@ -153,7 +153,7 @@ public class BoggleView {
         //Although this is the same as endGame, all the appropriate scores are reset but are do not need to be dispayed to the user.
         newGame.setOnAction(e -> {
             System.out.println("new game!");
-
+           //Accessibility feature: read out instructions when game starts
             Voice voice = new Voice();
             String[] instructions = new String[]{
                     "The Boggle board contains a grid of letters that are randomly placed.",
@@ -201,6 +201,13 @@ public class BoggleView {
 
         buttonArrayList();
         addButtonsToCanvas();
+
+        //Accessibility feature: read out the word of the button clicked
+        for(Button button: buttonList){
+            button.setOnAction(e ->{
+                wordToVoice(button);
+            });
+        }
 
         GridPane gridPane = addButtonsToCanvas();
 
@@ -304,9 +311,15 @@ public class BoggleView {
         return gPane;
     }
 
+    //initialize Timer
     private void initializeTimer() {
         this.timer.startTimer(this.model);
     }
-
+    //Accessibility feature: read out the word of the button clicked
+    private void wordToVoice(Button buttonClicked){
+        Voice voice = new Voice();
+        String character = buttonClicked.getText();
+        voice.sayWords(character);
+    }
 }
 
