@@ -19,10 +19,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Paths;
+import java.util.*;
 
 
 /**
@@ -36,6 +40,7 @@ public class BoggleView {
     Stage stage;
 
     Button newGame, endGame, muteMusic; //buttons for functions
+    Button enterWord; //This button is used when a user is ready to guess a word.
     Label scoreLabel = new Label("");
     Label gridTypelabel = new Label("");
 
@@ -47,7 +52,8 @@ public class BoggleView {
     Canvas canvas;
     GraphicsContext gc; //the graphics context will be linked to the canvas
 
-
+    private String wordsGuessed; //Collection of characters populated from the buttons that the user pressed.
+    private List<Integer> position_wordGuessed;
 
     HBox controls; //Segmented gui components used to organize the BorderPane.
 
@@ -65,17 +71,19 @@ public class BoggleView {
      * @param stage application stage
      */
 
-    public BoggleView(BoggleModel model, Stage stage) {
+    public BoggleView(BoggleModel model, Stage stage) throws MalformedURLException {
         this.model = model;
         this.stage = stage;
         this.buttonList = new ArrayList<>();
+        this.wordsGuessed = "";
+        this.position_wordGuessed = new ArrayList<>();
         initUI();
     }
 
     /**
      * Initialize interface
      */
-    private void initUI() {
+    private void initUI() throws MalformedURLException {
         this.stage.setTitle("TSDC Boggle");
         this.width = 600;
         this.height = 500;
@@ -151,6 +159,15 @@ public class BoggleView {
         //is printed in the terminal
         endGame.setOnAction(e -> {
             System.out.println("end game!");
+            this.wordsGuessed = "";
+            this.position_wordGuessed = new ArrayList<>();
+            model.runGame();
+            model.endGame();
+            buttonArrayList();
+            GridPane g = addButtonsToCanvas();
+            g.setAlignment(Pos.CENTER);
+            borderPane.setCenter(g);
+            updateScore();
             borderPane.requestFocus();
         });
 
@@ -162,7 +179,6 @@ public class BoggleView {
         });
         buttonArrayList();
         addButtonsToCanvas();
-
         GridPane gridPane = addButtonsToCanvas();
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
@@ -172,8 +188,11 @@ public class BoggleView {
 //        gc.setStroke(Color.BLANCHEDALMOND);
 //        gc.setFill(Color.CORAL);
 //        gc.fillRect(150, 20, this.width, this.height);
-
-
+//
+//        String path = "/Users/sfarah/TSDC/music.mp3";
+//        Media buzzer = new Media(Objects.requireNonNull(getClass().getResource(path)).toExternalForm());
+//        MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
+//        mediaPlayer.play();
 
         var scene = new Scene(borderPane, 800, 600);
         this.stage.setScene(scene);
@@ -193,12 +212,16 @@ public class BoggleView {
         if(stateText.equals("4x4")){
             gridTypelabel.setText("GridType: 4x4");
             buttonList.clear();
-            this.model.changeGridSize(4);
+            this.model.size = 4;
+            this.model.endGame();
+            updateScore();
             //change grid type from the model
         }else if(stateText.equals("5x5")){
             gridTypelabel.setText("GridType: 5x5");
             buttonList.clear();
-            this.model.changeGridSize(5);
+            this.model.size = 5;
+            this.model.endGame();
+            updateScore();
             //change grid type from the model (also end the game before doing so)
         }
         buttonArrayList();
@@ -217,12 +240,30 @@ public class BoggleView {
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
                 Button button = new Button(Character.toString(this.model.getGrid().getCharAt(i,j)));
-                button.prefHeight(300);
-                button.maxHeight(300);
-                button.prefWidth(300);
-                button.maxHeight(300);
+                button.prefHeight(150);
+                button.maxHeight(150);
+                button.prefWidth(150);
+                button.maxHeight(150);
+                int finalI = i;
+                int finalJ = j;
                 button.setOnAction(e -> {
-                   System.out.println(button.getText());
+                   System.out.println(button.getText() + " " + finalI + finalJ);
+                    //Highlight button when pressed, unhighlight after guessing a word
+
+                    Integer o = Integer.valueOf(String.valueOf(finalI) + String.valueOf(finalJ));
+                    if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)){
+                       System.out.println("guessing word");
+                        model.checkWord(this.wordsGuessed);
+                        this.wordsGuessed = "";
+                        for(Button val: buttonList){
+                            val.setStyle(null);
+                        }
+                        updateScore();
+                   }else{
+                        button.setStyle("-fx-background-color: red;" + "-fx-text-fill: white");//turn a button red after the user has pressed it.
+                       this.wordsGuessed = this.wordsGuessed + button.getText();
+                       this.position_wordGuessed.add(o);
+                   }
                 });
                 this.buttonList.add(button);
 

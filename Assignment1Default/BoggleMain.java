@@ -3,6 +3,8 @@ package boggle;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.net.MalformedURLException;
+
 
 /**
  * The Main class for the first Assignment in CSC207, Fall 2022
@@ -16,7 +18,7 @@ public class BoggleMain extends Application{
     public static void main(String[] args) {
         launch(args);
     }
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws MalformedURLException {
         BoggleModel model = new BoggleModel();
         BoggleView view = new BoggleView(model, primaryStage);
         model.runGame();
