@@ -179,6 +179,7 @@ public class BoggleView {
         //Once this button is clicked the model should be called to end game. The scores are announced on the screen while the game summary
         //is printed in the terminal
         endGame.setOnAction(e -> {
+            wordToVoice(endGame);
             System.out.println("end game!");
             borderPane.requestFocus();
         });
@@ -186,12 +187,14 @@ public class BoggleView {
         //Configures this such that it mutes the music playing in the game during launch.
         muteMusic.setOnAction(e -> {
             //mute music code
+            wordToVoice(muteMusic);
             System.out.println("mute music!");
             borderPane.requestFocus();
         });
 
         //starts a timed game. Timer will be visible once button is clicked and starts to countdown
         startTimerButton.setOnAction(e -> {
+            wordToVoice(startTimerButton);
             initializeTimer();
             Button source = (Button) e.getSource();
             source.setVisible(false);
