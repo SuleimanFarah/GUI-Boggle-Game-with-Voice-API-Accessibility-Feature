@@ -60,4 +60,6 @@ public class BoggleModel {
     public BoggleGrid getGrid(){
         return this.baseGrid;
     }
+
+
 }

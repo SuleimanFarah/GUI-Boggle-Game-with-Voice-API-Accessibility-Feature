@@ -1,16 +1,12 @@
 package boggle;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.EventHandler;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -18,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -158,6 +153,26 @@ public class BoggleView {
         //Although this is the same as endGame, all the appropriate scores are reset but are do not need to be dispayed to the user.
         newGame.setOnAction(e -> {
             System.out.println("new game!");
+
+            Voice voice = new Voice();
+            String[] instructions = new String[]{
+                    "The Boggle board contains a grid of letters that are randomly placed.",
+                    "We're both going to try to find words in this grid by joining the letters.",
+                    "You can form a word by connecting adjoining letters on the grid.",
+                    "Two letters adjoin if they are next to each other horizontally, ",
+                    "vertically, ",
+                    "or diagonally.",
+                    "The words you find must be at least 4 letters long, ",
+                    "and you can't use a letter twice in any single word.",
+                    "Your points will be based on word length:",
+                    "a 4-letter word is worth 1 point,",
+                    "5-letter words earn 2 points,",
+                    "and so on.",
+                    "After you find as many words as you can,",
+                    "I will find all the remaining words.",
+                    "Hit return when you're ready..."
+            };
+            voice.saySentences(instructions);
             borderPane.requestFocus();
         });
 
@@ -176,9 +191,9 @@ public class BoggleView {
         });
 
         //starts a timed game. Timer will be visible once button is clicked and starts to countdown
-        startTimerButton.setOnAction(e ->{
+        startTimerButton.setOnAction(e -> {
             initializeTimer();
-            Button source = (Button)e.getSource();
+            Button source = (Button) e.getSource();
             source.setVisible(false);
             timerLabel.setVisible(true);
             borderPane.requestFocus();
@@ -199,7 +214,6 @@ public class BoggleView {
 //        gc.fillRect(150, 20, this.width, this.height);
 
 
-
         var scene = new Scene(borderPane, 800, 600);
         this.stage.setScene(scene);
         this.stage.show();
@@ -210,17 +224,18 @@ public class BoggleView {
     /**
      * Based on user selection, switch from the current grid type to
      * the type selected (4x4, 5x5).
+     *
      * @param val
      */
-    private void swapGridType(Toggle val){
-        RadioButton state = (RadioButton)val.getToggleGroup().getSelectedToggle();
+    private void swapGridType(Toggle val) {
+        RadioButton state = (RadioButton) val.getToggleGroup().getSelectedToggle();
         String stateText = state.getText();
-        if(stateText.equals("4x4")){
+        if (stateText.equals("4x4")) {
             gridTypelabel.setText("GridType: 4x4");
             buttonList.clear();
             this.model.changeGridSize(4);
             //change grid type from the model
-        }else if(stateText.equals("5x5")){
+        } else if (stateText.equals("5x5")) {
             gridTypelabel.setText("GridType: 5x5");
             buttonList.clear();
             this.model.changeGridSize(5);
@@ -235,18 +250,19 @@ public class BoggleView {
     /**
      * This function edits the existing button arraylist with a new set of gridSize x gridSize buttons to be displayed.
      */
-    private void buttonArrayList(){
+    private void buttonArrayList() {
         int size = this.model.getGrid().numCols();
         this.buttonList.clear();
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                this.buttonList.add(new Button(Character.toString(this.model.getGrid().getCharAt(i,j))));
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.buttonList.add(new Button(Character.toString(this.model.getGrid().getCharAt(i, j))));
             }
         }
     }
 
     /**
      * Create a line between the most recent button pressed and the last.
+     *
      * @param x, y
      **/
 
@@ -264,30 +280,33 @@ public class BoggleView {
     /**
      * Using the class attribute for button arraylist, add all buttons into the canvas in a manner
      * appropriate to its grid size. The function should return a gridpane which is to be displayed on the screen.
+     *
      * @return GridPane gPane
      */
-    private GridPane addButtonsToCanvas(){
+    private GridPane addButtonsToCanvas() {
         int count = 0;
         GridPane gPane = new GridPane();
-        if (buttonList.size() == 16){
-            for(int i = 0; i<4; i++){
-                for(int j = 0; j < 4; j++){
-                    gPane.add(buttonList.get(count), i,j);
+        if (buttonList.size() == 16) {
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    gPane.add(buttonList.get(count), i, j);
                     count++;
                 }
             }
-        }else{
-            for(int i = 0; i<5; i++){
-                for(int j = 0; j < 5; j++){
-                    gPane.add(buttonList.get(count), i,j);
+        } else {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    gPane.add(buttonList.get(count), i, j);
                     count++;
                 }
             }
         }
         return gPane;
     }
-    private void initializeTimer(){
-        this.timer.startTimer();
+
+    private void initializeTimer() {
+        this.timer.startTimer(this.model);
     }
 
 }
+

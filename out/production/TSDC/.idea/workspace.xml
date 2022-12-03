@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/TSDC/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="Merged timer to BoggleView">
+      <change afterPath="$PROJECT_DIR$/Assignment1Default/boggle/Voice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleTimer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TSDC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TSDC.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/BoggleMain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TSDC/TSDC.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/TSDC.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleTimer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleTimer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleTimer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleTimer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/DemoBoggleApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/DemoView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/testing.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="douglasBranch" />
+        <entry key="$PROJECT_DIR$" value="feature/1.2-countdown-timer" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,22 +50,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/jose/CSC207/quandoug/javafx-sdk-19/lib/javafx.web.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "18",
+    "last_opened_file_path": "/home/jose/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmulex.jar",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
-  <component name="RunManager" selected="Application.DemoBoggleApp">
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Assignment1Default/boggle" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/textToSpeech" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.boggle.BoggleMain">
     <configuration name="BoggleMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="BoggleMain" />
       <module name="TSDC" />
@@ -106,9 +132,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DemoBoggleApp" />
         <item itemvalue="Application.boggle.BoggleMain" />
         <item itemvalue="Application.BoggleMain" />
+        <item itemvalue="Application.DemoBoggleApp" />
         <item itemvalue="Application.BoggleTimer" />
       </list>
     </recent_temporary>
@@ -126,7 +152,16 @@
       <workItem from="1669579856465" duration="9577000" />
       <workItem from="1669682543153" duration="912000" />
       <workItem from="1669758334967" duration="7000" />
+      <workItem from="1670011850813" duration="20277000" />
     </task>
+    <task id="LOCAL-00001" summary="Merged timer to BoggleView">
+      <created>1670015593877</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1670015593877</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,5 +177,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merged timer to BoggleView" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merged timer to BoggleView" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.io.IOException" memberName="detailMessage" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>
