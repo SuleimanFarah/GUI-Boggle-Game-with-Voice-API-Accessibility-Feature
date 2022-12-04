@@ -1,6 +1,5 @@
 package boggle;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -30,6 +29,8 @@ public class BoggleGame {
             {"AAAFRS", "AAEEEE", "AAFIRS", "ADENNN", "AEEEEM", "AEEGMU", "AEGMNN", "AFIRSY",
                     "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDLNOR", "DDHNOT", "DHHLOR",
                     "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
+
+    private String difficulty = "hard";
 
     /* 
      * BoggleGame constructor
@@ -132,6 +133,7 @@ public class BoggleGame {
      * words on the board, and the set of words found by the user. These objects are
      * passed by reference from here to many other functions.
      */
+
 
 //    public void playRound(int size, String letters){
 //        //step 1. initialize the grid
@@ -270,6 +272,7 @@ public class BoggleGame {
      * @param board The boggle board
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
      */
+
     public void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords, String humanWord){
 //        inCorrectWords inCorrectWordsObj = inCorrectWords.getFirstInstance();
         if((!allWords.containsKey(humanWord) || this.gameStats.getPlayerWords().contains(humanWord))) {
@@ -306,26 +309,39 @@ public class BoggleGame {
      * computer's score (stored in boggleStats).
      *
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
+     * @param chooseDif the choosen difficulty of the computer by the human (1=easy,2=medium,3=hard)
      */
     private void computerMove(Map<String,ArrayList<Position>> all_words){
         ArrayList<String> keySetC = new ArrayList<String>(all_words.keySet());
-        for (int i = 0; i < keySetC.size(); i++){
+        int size = (keySetC.size()/3);
+        if (difficulty.equals("medium")){
+            size = keySetC.size()/2;
+        }
+        else if (difficulty.equals("hard")){
+            size = keySetC.size();
+        }
+        for (int i = 0; i < size; i++){
             if (!this.gameStats.getPlayerWords().contains(keySetC.get(i))){
                 this.gameStats.addWord(keySetC.get(i), BoggleStats.Player.Computer);
             }
         }
     }
 
-    public String getHint(int numWordsNotFound, Map<String,ArrayList<Position>> allWords){
+    public String getHint(Map<String,ArrayList<Position>> allWords){
         Random rand = new Random();
+        inCorrectWords numWordsNotFound= inCorrectWords.getFirstInstance();
         int n = rand.nextInt(allWords.size());
-        if (numWordsNotFound <= 2){
+        if (numWordsNotFound.numWordsNotFound <= 2){
             return allWords.keySet().toArray()[n].toString().substring(0,1);
         }
-        else if (numWordsNotFound <= 5){
+        else if (numWordsNotFound.numWordsNotFound <= 5){
             return allWords.keySet().toArray()[n].toString().substring(0,2);
         }
         return allWords.keySet().toArray()[n].toString().substring(0,3);
+    }
+
+    public void setDif(String Dif){
+        this.difficulty = Dif;
     }
 
 }

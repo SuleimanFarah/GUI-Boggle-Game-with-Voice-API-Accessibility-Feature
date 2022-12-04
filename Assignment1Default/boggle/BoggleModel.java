@@ -54,15 +54,18 @@ public class BoggleModel {
         this.boggleGame.findAllWords(allWords,bogDict,baseGrid);
         System.out.println(this.baseGrid);
     }
-
-    /**Increment player scores if they get a guess. A guess is defined by consecutive adjacent selections of buttons.
+    
+    public void setDiffuclty(String diffuclty){
+        this.boggleGame.setDif(diffuclty);
+    }
+    
+     /**Increment player scores if they get a guess. A guess is defined by consecutive adjacent selections of buttons.
      *
      * @param word
      */
     public void checkWord(String word){
         this.boggleGame.humanMove(getGrid(),this.allWords, word);
     }
-
 
     public int getScore() {
         return getStats().getScore();
