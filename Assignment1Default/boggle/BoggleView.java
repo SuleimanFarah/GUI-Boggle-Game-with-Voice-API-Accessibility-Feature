@@ -36,12 +36,13 @@ import java.util.*;
 public class BoggleView {
 
     BoggleModel model; //reference to model
+    BoggleTimer timer;
     Stage stage;
 
-    Button newGame, endGame, muteMusic; //buttons for functions
-    Button enterWord; //This button is used when a user is ready to guess a word.
+    Button newGame, endGame, muteMusic, startTimerButton; //buttons for functions
     Label scoreLabel = new Label("");
     Label gridTypelabel = new Label("");
+    static Label timerLabel;
 
     RadioButton gridType; //4x4 boggle grid radio button
     RadioButton gridType2; //5x5 boggle grid radio button
@@ -70,9 +71,10 @@ public class BoggleView {
      * @param stage application stage
      */
 
-    public BoggleView(BoggleModel model, Stage stage) {
+    public BoggleView(BoggleModel model, Stage stage, BoggleTimer timer) {
         this.model = model;
         this.stage = stage;
+        this.timer = timer;
         this.buttonList = new ArrayList<>();
         this.wordsGuessed = "";
         this.position_wordGuessed = new ArrayList<>();
@@ -102,6 +104,12 @@ public class BoggleView {
         gridTypelabel.setMinWidth(50);
         gridTypelabel.setFont(new Font(20));
 
+        //create label for timer
+        timerLabel = new Label();
+        timerLabel.setText("Time: 60");
+        timerLabel.setFont(new Font(20));
+        timerLabel.setMinWidth(50);
+        timerLabel.setVisible(false);
 
         final ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -135,15 +143,23 @@ public class BoggleView {
         muteMusic.setPrefSize(150, 50);
         muteMusic.setFont(new Font(12));
 
+        startTimerButton = new Button("Start a timed Game");
+        startTimerButton.setId("startTimer");
+        startTimerButton.setPrefSize(150, 50);
+        startTimerButton.setFont(new Font(12));
+
         HBox controls = new HBox(20, newGame, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
-
-
         VBox scoreBox = new VBox(20, scoreLabel, gridTypelabel, gridType, gridType2);
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         scoreBox.setAlignment(Pos.TOP_CENTER);
+
+        HBox timerBox = new HBox(5);
+        timerBox.setPadding(new Insets(20, 20, 20, 20));
+        timerBox.getChildren().addAll(timerLabel, startTimerButton);
+        timerBox.setAlignment(Pos.BASELINE_CENTER);
 
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
 
@@ -176,6 +192,16 @@ public class BoggleView {
             System.out.println("mute music!");
             borderPane.requestFocus();
         });
+
+        //starts a timed game. Timer will be visible once button is clicked and starts to countdown
+        startTimerButton.setOnAction(e ->{
+            initializeTimer();
+            Button source = (Button)e.getSource();
+            source.setVisible(false);
+            timerLabel.setVisible(true);
+            borderPane.requestFocus();
+        });
+
         buttonArrayList();
         addButtonsToCanvas();
         GridPane gridPane = addButtonsToCanvas();
@@ -183,6 +209,7 @@ public class BoggleView {
         borderPane.setCenter(gridPane);
         borderPane.setTop(controls);
         borderPane.setRight(scoreBox);
+        borderPane.setBottom(timerBox);
 
         var scene = new Scene(borderPane, 800, 600);
         this.stage.setScene(scene);
@@ -314,4 +341,8 @@ public class BoggleView {
         }
         return gPane;
     }
+    private void initializeTimer(){
+        this.timer.startTimer();
+    }
+
 }
