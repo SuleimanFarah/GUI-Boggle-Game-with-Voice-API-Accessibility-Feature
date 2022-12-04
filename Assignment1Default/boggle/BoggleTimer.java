@@ -34,7 +34,9 @@ public class BoggleTimer{
         }
         time.play();
     }
-
+    public void AddTimer(){
+        seconds += 5;
+    }
     private void terminateGame(){
         //todo
     }
