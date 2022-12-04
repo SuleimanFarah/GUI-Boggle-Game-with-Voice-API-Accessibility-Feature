@@ -3,6 +3,9 @@ package boggle;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 
 /**
  * The Main class for the first Assignment in CSC207, Fall 2022
