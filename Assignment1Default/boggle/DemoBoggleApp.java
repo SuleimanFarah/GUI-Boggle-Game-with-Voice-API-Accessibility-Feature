@@ -19,6 +19,5 @@ public class DemoBoggleApp extends Application {
     public void start(Stage primaryStage) {
         this.timer = new BoggleTimer();
         this.view = new DemoView(timer, primaryStage);
-
     }
 }

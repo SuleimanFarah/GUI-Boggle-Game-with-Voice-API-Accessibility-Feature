@@ -11,16 +11,15 @@ public class BoggleTimer{
     private final Integer startTime = 60;
     private Integer seconds = startTime;
 
-    //update timer every second
     public void startTimer() {
 
         Timeline time = new Timeline();
         KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
-
+            //update timer every second
             @Override
             public void handle(ActionEvent event) {
                 seconds--;
-                DemoView.timerLabel.setText("Time: "+seconds.toString());
+                BoggleView.timerLabel.setText("Time: "+seconds.toString());
                 if(seconds<=0){
                     terminateGame();
                     time.stop();
@@ -35,11 +34,8 @@ public class BoggleTimer{
         }
         time.play();
     }
-    //function for adding time whenever correct words has been inputted.
-    public void AddTimer(){
-        seconds += 5;
-    }
-        private void terminateGame(){
+
+    private void terminateGame(){
         //todo
     }
 }
