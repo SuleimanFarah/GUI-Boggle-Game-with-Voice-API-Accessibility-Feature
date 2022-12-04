@@ -2,6 +2,7 @@ package boggle;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,17 +12,20 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.*;
 
 
 /**
@@ -32,13 +36,15 @@ import java.util.Stack;
 public class BoggleView {
 
     BoggleModel model; //reference to model
+    BoggleTimer timer;
     Stage stage;
 
-    Button newGame, endGame, muteMusic; //buttons for functions
+    Button newGame, endGame, muteMusic, startTimerButton; //buttons for functions
     Label scoreLabel = new Label("");
     Label incorrectWordsLabel = new Label("");
     Label gridTypelabel = new Label("");
     Label difTypeLabel = new Label("");
+    static Label timerLabel;
 
     RadioButton gridType; //4x4 boggle grid radio button
     RadioButton gridType2; //5x5 boggle grid radio button
@@ -52,7 +58,10 @@ public class BoggleView {
     Canvas canvas;
     GraphicsContext gc; //the graphics context will be linked to the canvas
 
-    HBox controls;
+    private String wordsGuessed; //Collection of characters populated from the buttons that the user pressed.
+    private List<Integer> position_wordGuessed;
+
+    HBox controls; //Segmented gui components used to organize the BorderPane.
 
     VBox scoreBox;
 
@@ -68,10 +77,13 @@ public class BoggleView {
      * @param stage application stage
      */
 
-    public BoggleView(BoggleModel model, Stage stage) {
+    public BoggleView(BoggleModel model, Stage stage, BoggleTimer timer) {
         this.model = model;
         this.stage = stage;
+        this.timer = timer;
         this.buttonList = new ArrayList<>();
+        this.wordsGuessed = "";
+        this.position_wordGuessed = new ArrayList<>();
         initUI();
     }
 
@@ -99,6 +111,12 @@ public class BoggleView {
         gridTypelabel.setMinWidth(50);
         gridTypelabel.setFont(new Font(20));
 
+        //create label for timer
+        timerLabel = new Label();
+        timerLabel.setText("Time: 60");
+        timerLabel.setFont(new Font(20));
+        timerLabel.setMinWidth(50);
+        timerLabel.setVisible(false);
 
         final ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -134,7 +152,7 @@ public class BoggleView {
         muteMusic.setId("Save");
         muteMusic.setPrefSize(150, 50);
         muteMusic.setFont(new Font(12));
-
+        
         difTypeLabel.setText("Difficulty:");
         difTypeLabel.setMinWidth(50);
         difTypeLabel.setFont(new Font(20));
@@ -156,15 +174,25 @@ public class BoggleView {
         diffType3.setToggleGroup(toggleGroup2);
         diffType3.setUserData(Color.SALMON);
         diffType3.setFont(new Font(16));
+        
+        startTimerButton = new Button("Start a timed Game");
+        startTimerButton.setId("startTimer");
+        startTimerButton.setPrefSize(150, 50);
+        startTimerButton.setFont(new Font(12));
 
         HBox controls = new HBox(20, newGame, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
-
-
+        
         VBox scoreBox = new VBox(20, scoreLabel, incorrectWordsLabel, gridTypelabel, gridType, gridType2, difTypeLabel, diffType1, diffType2, diffType3);
+        
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         scoreBox.setAlignment(Pos.TOP_CENTER);
+
+        HBox timerBox = new HBox(5);
+        timerBox.setPadding(new Insets(20, 20, 20, 20));
+        timerBox.getChildren().addAll(timerLabel, startTimerButton);
+        timerBox.setAlignment(Pos.BASELINE_CENTER);
 
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
         toggleGroup2.selectedToggleProperty().addListener((observable, oldVal, newVal) -> setDifficult(newVal));
@@ -180,6 +208,15 @@ public class BoggleView {
         //is printed in the terminal
         endGame.setOnAction(e -> {
             System.out.println("end game!");
+            this.wordsGuessed = "";
+            this.position_wordGuessed = new ArrayList<>();
+            model.runGame();
+            model.endGame();
+            buttonArrayList();
+            GridPane g = addButtonsToCanvas();
+            g.setAlignment(Pos.CENTER);
+            borderPane.setCenter(g);
+            updateScore();
             borderPane.requestFocus();
         });
 
@@ -189,20 +226,24 @@ public class BoggleView {
             System.out.println("mute music!");
             borderPane.requestFocus();
         });
+
+        //starts a timed game. Timer will be visible once button is clicked and starts to countdown
+        startTimerButton.setOnAction(e ->{
+            initializeTimer();
+            Button source = (Button)e.getSource();
+            source.setVisible(false);
+            timerLabel.setVisible(true);
+            borderPane.requestFocus();
+        });
+
         buttonArrayList();
         addButtonsToCanvas();
-
         GridPane gridPane = addButtonsToCanvas();
-
+        gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
         borderPane.setTop(controls);
         borderPane.setRight(scoreBox);
-
-//        gc.setStroke(Color.BLANCHEDALMOND);
-//        gc.setFill(Color.CORAL);
-//        gc.fillRect(150, 20, this.width, this.height);
-
-
+        borderPane.setBottom(timerBox);
 
         var scene = new Scene(borderPane, 800, 600);
         this.stage.setScene(scene);
@@ -222,16 +263,23 @@ public class BoggleView {
         if(stateText.equals("4x4")){
             gridTypelabel.setText("GridType: 4x4");
             buttonList.clear();
-            this.model.changeGridSize(4);
+            this.model.size = 4;
+            this.model.endGame();
+            this.model.changeGridSize(this.model.size);
+            updateScore();
             //change grid type from the model
         }else if(stateText.equals("5x5")){
             gridTypelabel.setText("GridType: 5x5");
             buttonList.clear();
-            this.model.changeGridSize(5);
+            this.model.size = 5;
+            this.model.endGame();
+            this.model.changeGridSize(this.model.size);
+            updateScore();
             //change grid type from the model (also end the game before doing so)
         }
         buttonArrayList();
         GridPane g = addButtonsToCanvas();
+        g.setAlignment(Pos.CENTER);
         borderPane.setCenter(g);
     }
 
@@ -272,7 +320,30 @@ public class BoggleView {
         this.buttonList.clear();
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                this.buttonList.add(new Button(Character.toString(this.model.getGrid().getCharAt(i,j))));
+                Button button = new Button(Character.toString(this.model.getGrid().getCharAt(i,j)));
+                int finalI = i;
+                int finalJ = j;
+                button.setOnAction(e -> {
+                   System.out.println(button.getText() + " " + finalI + finalJ);
+                    //Highlight button when pressed, unhighlight after guessing a word
+
+                    Integer o = Integer.valueOf(String.valueOf(finalI) + String.valueOf(finalJ));
+                    if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)){
+                       System.out.println("guessing word");
+                        model.checkWord(this.wordsGuessed);
+                        this.wordsGuessed = "";
+                        for(Button val: buttonList){
+                            val.setStyle(null);
+                        }
+                        updateScore();
+                   }else{
+                        button.setStyle("-fx-background-color: red;" + "-fx-text-fill: white");//turn a button red after the user has pressed it.
+                       this.wordsGuessed = this.wordsGuessed + button.getText();
+                       this.position_wordGuessed.add(o);
+                   }
+                });
+                this.buttonList.add(button);
+
             }
         }
     }
@@ -301,9 +372,19 @@ public class BoggleView {
     private GridPane addButtonsToCanvas(){
         int count = 0;
         GridPane gPane = new GridPane();
+        gPane.setPrefHeight(500);
+        gPane.setMaxHeight(500);
+        gPane.setPrefWidth(500);
+        gPane.setMaxWidth(500);
+        gPane.setPrefSize(500,500);
+
         if (buttonList.size() == 16){
             for(int i = 0; i<4; i++){
                 for(int j = 0; j < 4; j++){
+                    buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
+                    buttonList.get(count).maxWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).maxHeight(Integer.MAX_VALUE);
                     gPane.add(buttonList.get(count), i,j);
                     count++;
                 }
@@ -311,6 +392,10 @@ public class BoggleView {
         }else{
             for(int i = 0; i<5; i++){
                 for(int j = 0; j < 5; j++){
+                    buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
+                    buttonList.get(count).maxWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).maxHeight(Integer.MAX_VALUE);
                     gPane.add(buttonList.get(count), i,j);
                     count++;
                 }
@@ -318,4 +403,8 @@ public class BoggleView {
         }
         return gPane;
     }
+    private void initializeTimer(){
+        this.timer.startTimer();
+    }
+
 }
