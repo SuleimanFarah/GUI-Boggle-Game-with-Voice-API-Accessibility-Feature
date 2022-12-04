@@ -285,10 +285,8 @@ public class BoggleGame {
             //step 2. Get a input (a word) from the user via the console
             System.out.println("Enter word: ");
             String humanWord = scanner.nextLine().toUpperCase();
-            inCorrectWords inCorrectWordsObj = inCorrectWords.getFirstInstance();
             while ((!allWords.containsKey(humanWord) || this.gameStats.getPlayerWords().contains(humanWord))
                     && !humanWord.equals("")){
-                inCorrectWordsObj.incrementNumWordsNotFound();
                 String help = getHint(allWords);
                 System.out.println("Hint: " + help);
                 System.out.println("not valid word");
@@ -299,7 +297,6 @@ public class BoggleGame {
                 }
 
             }
-            inCorrectWordsObj.resetNumWordsNotFounds();
 
             if (humanWord.equals("")){
                 break;
