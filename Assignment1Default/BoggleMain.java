@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 
 /**
@@ -18,7 +19,7 @@ public class BoggleMain extends Application{
     public static void main(String[] args) {
         launch(args);
     }
-    public void start(Stage primaryStage) throws MalformedURLException {
+    public void start(Stage primaryStage) {
         BoggleModel model = new BoggleModel();
         BoggleView view = new BoggleView(model, primaryStage);
         model.runGame();

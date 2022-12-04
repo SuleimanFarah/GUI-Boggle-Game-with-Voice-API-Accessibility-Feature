@@ -12,19 +12,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -71,7 +70,7 @@ public class BoggleView {
      * @param stage application stage
      */
 
-    public BoggleView(BoggleModel model, Stage stage) throws MalformedURLException {
+    public BoggleView(BoggleModel model, Stage stage) {
         this.model = model;
         this.stage = stage;
         this.buttonList = new ArrayList<>();
@@ -83,7 +82,7 @@ public class BoggleView {
     /**
      * Initialize interface
      */
-    private void initUI() throws MalformedURLException {
+    private void initUI() {
         this.stage.setTitle("TSDC Boggle");
         this.width = 600;
         this.height = 500;
@@ -185,15 +184,6 @@ public class BoggleView {
         borderPane.setTop(controls);
         borderPane.setRight(scoreBox);
 
-//        gc.setStroke(Color.BLANCHEDALMOND);
-//        gc.setFill(Color.CORAL);
-//        gc.fillRect(150, 20, this.width, this.height);
-//
-//        String path = "/Users/sfarah/TSDC/music.mp3";
-//        Media buzzer = new Media(Objects.requireNonNull(getClass().getResource(path)).toExternalForm());
-//        MediaPlayer mediaPlayer = new MediaPlayer(buzzer);
-//        mediaPlayer.play();
-
         var scene = new Scene(borderPane, 800, 600);
         this.stage.setScene(scene);
         this.stage.show();
@@ -214,6 +204,7 @@ public class BoggleView {
             buttonList.clear();
             this.model.size = 4;
             this.model.endGame();
+            this.model.changeGridSize(this.model.size);
             updateScore();
             //change grid type from the model
         }else if(stateText.equals("5x5")){
@@ -221,6 +212,7 @@ public class BoggleView {
             buttonList.clear();
             this.model.size = 5;
             this.model.endGame();
+            this.model.changeGridSize(this.model.size);
             updateScore();
             //change grid type from the model (also end the game before doing so)
         }
@@ -240,10 +232,6 @@ public class BoggleView {
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
                 Button button = new Button(Character.toString(this.model.getGrid().getCharAt(i,j)));
-                button.prefHeight(150);
-                button.maxHeight(150);
-                button.prefWidth(150);
-                button.maxHeight(150);
                 int finalI = i;
                 int finalJ = j;
                 button.setOnAction(e -> {
@@ -299,9 +287,15 @@ public class BoggleView {
         gPane.setMaxHeight(500);
         gPane.setPrefWidth(500);
         gPane.setMaxWidth(500);
+        gPane.setPrefSize(500,500);
+
         if (buttonList.size() == 16){
             for(int i = 0; i<4; i++){
                 for(int j = 0; j < 4; j++){
+                    buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
+                    buttonList.get(count).maxWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).maxHeight(Integer.MAX_VALUE);
                     gPane.add(buttonList.get(count), i,j);
                     count++;
                 }
@@ -309,6 +303,10 @@ public class BoggleView {
         }else{
             for(int i = 0; i<5; i++){
                 for(int j = 0; j < 5; j++){
+                    buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
+                    buttonList.get(count).maxWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).maxHeight(Integer.MAX_VALUE);
                     gPane.add(buttonList.get(count), i,j);
                     count++;
                 }

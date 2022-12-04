@@ -61,7 +61,6 @@ public class BoggleModel {
      */
     public void checkWord(String word){
         this.boggleGame.humanMove(getGrid(),this.allWords, word);
-//        if (allWords.containsKey(word) )
     }
 
 
