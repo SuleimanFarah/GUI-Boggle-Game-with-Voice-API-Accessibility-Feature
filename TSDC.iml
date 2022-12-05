@@ -26,5 +26,16 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="javafx.base" level="application" />
+    <orderEntry type="library" name="text-to-speech" level="application" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/Downloads/freetts-1.2.2-bin/freetts-1.2/lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
