@@ -1,6 +1,10 @@
 package boggle;
 
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,9 +19,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -30,10 +46,9 @@ public class BoggleView {
 
     BoggleModel model; //reference to model
     BoggleTimer timer;
-    BoggleMusic music;
     Stage stage;
 
-    Button newGame, endGame, muteMusic, startTimerButton; //buttons for functions
+    Button instructions, endGame, muteMusic, startTimerButton; //buttons for functions
     Label scoreLabel = new Label("");
     Label incorrectWordsLabel = new Label("");
     Label gridTypelabel = new Label("");
@@ -69,14 +84,12 @@ public class BoggleView {
      *
      * @param model reference to tetris model
      * @param stage application stage
-     * @param music
      */
 
-    public BoggleView(BoggleModel model, Stage stage, BoggleTimer timer, BoggleMusic music) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public BoggleView(BoggleModel model, Stage stage, BoggleTimer timer) {
         this.model = model;
         this.stage = stage;
         this.timer = timer;
-        this.music = music;
         this.buttonList = new ArrayList<>();
         this.wordsGuessed = "";
         this.position_wordGuessed = new ArrayList<>();
@@ -86,7 +99,7 @@ public class BoggleView {
     /**
      * Initialize interface
      */
-    private void initUI() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    private void initUI() {
         this.stage.setTitle("TSDC Boggle");
         this.width = 600;
         this.height = 500;
@@ -134,10 +147,10 @@ public class BoggleView {
         incorrectWordsLabel.setFont(new Font(20));
 
         //add buttons
-        newGame = new Button("New Game");
-        newGame.setId("newGame");
-        newGame.setPrefSize(150, 50);
-        newGame.setFont(new Font(12));
+        instructions = new Button("Instructions");
+        instructions.setId("instructions");
+        instructions.setPrefSize(150, 50);
+        instructions.setFont(new Font(12));
 
         endGame = new Button("End Game");
         endGame.setId("endGame");
@@ -176,7 +189,7 @@ public class BoggleView {
         startTimerButton.setPrefSize(150, 50);
         startTimerButton.setFont(new Font(12));
 
-        HBox controls = new HBox(20, newGame, endGame, muteMusic);
+        HBox controls = new HBox(20, instructions, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
@@ -193,13 +206,9 @@ public class BoggleView {
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
         toggleGroup2.selectedToggleProperty().addListener((observable, oldVal, newVal) -> setDifficult(newVal));
 
-        //starting the music
-        music.start("music.wav");
-
 
         //Although this is the same as endGame, all the appropriate scores are reset but are do not need to be dispayed to the user.
-        newGame.setOnAction(e -> {
-            System.out.println("new game!");
+        instructions.setOnAction(e -> {
            //Accessibility feature: read out instructions when game starts
             Voice voice = new Voice();
             String[] instructions = new String[]{
@@ -244,14 +253,6 @@ public class BoggleView {
         muteMusic.setOnAction(e -> {
             //mute music code
             wordToVoice(muteMusic);
-            if(muteMusic.getText() == "Mute Music"){
-                muteMusic.setText("Unmute Music");
-                music.pause();
-            }
-            else if(muteMusic.getText() == "Unmute Music"){
-                muteMusic.setText("Mute Music");
-                music.play();
-            }
             System.out.println("mute music!");
             borderPane.requestFocus();
         });
@@ -266,8 +267,6 @@ public class BoggleView {
             borderPane.requestFocus();
         });
 
-        buttonArrayList();
-        addButtonsToCanvas();
 
 
         //Accessibility feature: read out the word of the button clicked
@@ -277,7 +276,7 @@ public class BoggleView {
             });
         }
 
-
+        buttonArrayList();
         GridPane gridPane = addButtonsToCanvas();
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
@@ -337,24 +336,22 @@ public class BoggleView {
             case "easy" -> {
                 difTypeLabel.setText("Difficulty: EASY");
                 this.model.setDiffuclty("easy");
-                buttonList.clear();
             }
             //change grid type from the model
             case "medium" -> {
                 difTypeLabel.setText("Difficulty: MEDIUM");
                 this.model.setDiffuclty("medium");
-                buttonList.clear();
             }
             //change grid type from the model (also end the game before doing so)
             case "hard" -> {
                 difTypeLabel.setText("Difficulty: HARD");
                 this.model.setDiffuclty("hard");
-                buttonList.clear();
             }
         }
-
+        this.model.changeGridSize(this.model.size);
         buttonArrayList();
         GridPane g = addButtonsToCanvas();
+        g.setAlignment(Pos.CENTER);
         borderPane.setCenter(g);
     }
 
@@ -373,12 +370,14 @@ public class BoggleView {
                 button.setOnAction(e -> {
                     System.out.println(button.getText() + " " + finalI + finalJ);
                     //Highlight button when pressed, unhighlight after guessing a word
+                    wordToVoice(button);
 
                     Integer o = Integer.valueOf(String.valueOf(finalI) + String.valueOf(finalJ));
                     if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)) {
                         System.out.println("guessing word");
                         model.checkWord(this.wordsGuessed);
                         this.wordsGuessed = "";
+                        this.position_wordGuessed.clear();
                         for (Button val : buttonList) {
                             val.setStyle(null);
                         }
@@ -395,17 +394,6 @@ public class BoggleView {
                 }
             }
 
-
-
-    /**
-     * Create a line between the most recent button pressed and the last.
-     *
-     * @param x, y
-     **/
-
-    private void buttonLineSelection(int x, int y) {
-        //to be created in later sprint
-    }
 
     /**
      * Update score on UI

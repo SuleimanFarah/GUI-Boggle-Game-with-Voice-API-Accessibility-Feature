@@ -37,6 +37,7 @@ public class BoggleModel {
      * Concludes a game, all appropriate scores are tallied. All appropriate game variables are reset.
      */
     public void endGame(){
+        this.allWords = new HashMap<>();
         this.stats.summarizeGame();
         this.boggleGame = new BoggleGame();
         this.stats = boggleGame.gameStats;
@@ -50,7 +51,9 @@ public class BoggleModel {
         this.baseGrid = new BoggleGrid(value);
         this.size = value;
         this.baseGrid.initalizeBoard(this.boggleGame.randomizeLetters(value));
-        endGame();
+        this.allWords = new HashMap<>();
+        this.boggleGame = new BoggleGame();
+        this.stats = boggleGame.gameStats;
         this.boggleGame.findAllWords(allWords,bogDict,baseGrid);
         System.out.println(this.baseGrid);
     }
