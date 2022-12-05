@@ -336,21 +336,23 @@ public class BoggleView {
             case "easy" -> {
                 difTypeLabel.setText("Difficulty: EASY");
                 this.model.setDiffuclty("easy");
-                buttonList.clear();
             }
             //change grid type from the model
             case "medium" -> {
                 difTypeLabel.setText("Difficulty: MEDIUM");
                 this.model.setDiffuclty("medium");
-                buttonList.clear();
             }
             //change grid type from the model (also end the game before doing so)
             case "hard" -> {
                 difTypeLabel.setText("Difficulty: HARD");
                 this.model.setDiffuclty("hard");
-                buttonList.clear();
             }
         }
+        this.model.changeGridSize(this.model.size);
+        buttonArrayList();
+        GridPane g = addButtonsToCanvas();
+        g.setAlignment(Pos.CENTER);
+        borderPane.setCenter(g);
     }
 
 
@@ -392,17 +394,6 @@ public class BoggleView {
                 }
             }
 
-
-
-    /**
-     * Create a line between the most recent button pressed and the last.
-     *
-     * @param x, y
-     **/
-
-    private void buttonLineSelection(int x, int y) {
-        //to be created in later sprint
-    }
 
     /**
      * Update score on UI
