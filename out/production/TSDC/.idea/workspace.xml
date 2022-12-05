@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="Added TTS for buttons">
       <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/boggle/BoggleView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +19,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/1.2-countdown-timer" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -140,6 +139,8 @@
       <workItem from="1669682543153" duration="912000" />
       <workItem from="1669758334967" duration="7000" />
       <workItem from="1670011850813" duration="27572000" />
+      <workItem from="1670195806320" duration="1838000" />
+      <workItem from="1670225801179" duration="2161000" />
     </task>
     <task id="LOCAL-00001" summary="Merged timer to BoggleView">
       <created>1670015593877</created>

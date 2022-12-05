@@ -161,7 +161,7 @@ public class BoggleView {
         muteMusic.setId("Save");
         muteMusic.setPrefSize(150, 50);
         muteMusic.setFont(new Font(12));
-        
+
         difTypeLabel.setText("Difficulty:");
         difTypeLabel.setMinWidth(50);
         difTypeLabel.setFont(new Font(20));
@@ -183,7 +183,7 @@ public class BoggleView {
         diffType3.setToggleGroup(toggleGroup2);
         diffType3.setUserData(Color.SALMON);
         diffType3.setFont(new Font(16));
-        
+
         startTimerButton = new Button("Start a timed Game");
         startTimerButton.setId("startTimer");
         startTimerButton.setPrefSize(150, 50);
@@ -192,9 +192,9 @@ public class BoggleView {
         HBox controls = new HBox(20, newGame, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
-        
+
         VBox scoreBox = new VBox(20, scoreLabel, incorrectWordsLabel, gridTypelabel, gridType, gridType2, difTypeLabel, diffType1, diffType2, diffType3);
-        
+
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         scoreBox.setAlignment(Pos.TOP_CENTER);
 
@@ -369,36 +369,35 @@ public class BoggleView {
         this.buttonList.clear();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.buttonList.add(new Button(Character.toString(this.model.getGrid().getCharAt(i, j))));
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                Button button = new Button(Character.toString(this.model.getGrid().getCharAt(i,j)));
+                Button button = new Button(Character.toString(this.model.getGrid().getCharAt(i, j)));
                 int finalI = i;
                 int finalJ = j;
                 button.setOnAction(e -> {
-                   System.out.println(button.getText() + " " + finalI + finalJ);
+                    System.out.println(button.getText() + " " + finalI + finalJ);
                     //Highlight button when pressed, unhighlight after guessing a word
 
                     Integer o = Integer.valueOf(String.valueOf(finalI) + String.valueOf(finalJ));
-                    if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)){
-                       System.out.println("guessing word");
+                    if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)) {
+                        System.out.println("guessing word");
                         model.checkWord(this.wordsGuessed);
                         this.wordsGuessed = "";
-                        for(Button val: buttonList){
+                        for (Button val : buttonList) {
                             val.setStyle(null);
                         }
                         updateScore();
-                   }else{
+                    } else {
                         button.setStyle("-fx-background-color: red;" + "-fx-text-fill: white");//turn a button red after the user has pressed it.
-                       this.wordsGuessed = this.wordsGuessed + button.getText();
-                       this.position_wordGuessed.add(o);
-                   }
+                        this.wordsGuessed = this.wordsGuessed + button.getText();
+                        this.position_wordGuessed.add(o);
+                    }
                 });
                 this.buttonList.add(button);
 
+                    }
+                }
             }
-        }
-    }
+
+
 
     /**
      * Create a line between the most recent button pressed and the last.
@@ -424,49 +423,37 @@ public class BoggleView {
      * @return GridPane gPane
      */
     private GridPane addButtonsToCanvas() {
-        int count = 0;
-        GridPane gPane = new GridPane();
-        if (buttonList.size() == 16) {
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 4; j++) {
-                    gPane.add(buttonList.get(count), i, j);
-                    count++;
-                }
-            }
-        } else {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    gPane.add(buttonList.get(count), i, j);
+                int count = 0;
+                GridPane gPane = new GridPane();
+                gPane.setPrefHeight(500);
+                gPane.setMaxHeight(500);
+                gPane.setPrefWidth(500);
+                gPane.setMaxWidth(500);
+                gPane.setPrefSize(500, 500);
 
-        gPane.setPrefHeight(500);
-        gPane.setMaxHeight(500);
-        gPane.setPrefWidth(500);
-        gPane.setMaxWidth(500);
-        gPane.setPrefSize(500,500);
-
-        if (buttonList.size() == 16){
-            for(int i = 0; i<4; i++){
-                for(int j = 0; j < 4; j++){
-                    buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
-                    buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
-                    buttonList.get(count).maxWidth(Integer.MAX_VALUE);
-                    buttonList.get(count).maxHeight(Integer.MAX_VALUE);
-                    gPane.add(buttonList.get(count), i,j);
-                    count++;
+                if (buttonList.size() == 16) {
+                    for (int i = 0; i < 4; i++) {
+                        for (int j = 0; j < 4; j++) {
+                            buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
+                            buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
+                            buttonList.get(count).maxWidth(Integer.MAX_VALUE);
+                            buttonList.get(count).maxHeight(Integer.MAX_VALUE);
+                            gPane.add(buttonList.get(count), i, j);
+                            count++;
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < 5; i++) {
+                        for (int j = 0; j < 5; j++) {
+                            buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
+                            buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
+                            buttonList.get(count).maxWidth(Integer.MAX_VALUE);
+                            buttonList.get(count).maxHeight(Integer.MAX_VALUE);
+                            gPane.add(buttonList.get(count), i, j);
+                            count++;
+                        }
+                    }
                 }
-            }
-        }else{
-            for(int i = 0; i<5; i++){
-                for(int j = 0; j < 5; j++){
-                    buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
-                    buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
-                    buttonList.get(count).maxWidth(Integer.MAX_VALUE);
-                    buttonList.get(count).maxHeight(Integer.MAX_VALUE);
-                    gPane.add(buttonList.get(count), i,j);
-                    count++;
-                }
-            }
-        }
         return gPane;
     }
 
