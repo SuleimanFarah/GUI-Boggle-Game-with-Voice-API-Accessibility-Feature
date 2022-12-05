@@ -274,14 +274,15 @@ public class BoggleGame {
      */
 
     public void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords, String humanWord){
-//        inCorrectWords inCorrectWordsObj = inCorrectWords.getFirstInstance();
+        inCorrectWords inCorrectWordsObj = inCorrectWords.getFirstInstance();
         if((!allWords.containsKey(humanWord) || this.gameStats.getPlayerWords().contains(humanWord))) {
 //            inCorrectWordsObj.incrementNumWordsNotFound();
 //            String help = getHint(inCorrectWordsObj.numWordsNotFound, allWords);
 //            System.out.println("Hint: " + help);
             System.out.println("Word not found");
+            inCorrectWordsObj.incrementNumWordsNotFound();
         }else{
-//            inCorrectWordsObj.resetNumWordsNotFounds();
+            inCorrectWordsObj.resetNumWordsNotFounds();
             this.gameStats.addWord(humanWord, BoggleStats.Player.Human);
 
         }
@@ -325,19 +326,6 @@ public class BoggleGame {
                 this.gameStats.addWord(keySetC.get(i), BoggleStats.Player.Computer);
             }
         }
-    }
-
-    public String getHint(Map<String,ArrayList<Position>> allWords){
-        Random rand = new Random();
-        inCorrectWords numWordsNotFound= inCorrectWords.getFirstInstance();
-        int n = rand.nextInt(allWords.size());
-        if (numWordsNotFound.numWordsNotFound <= 2){
-            return allWords.keySet().toArray()[n].toString().substring(0,1);
-        }
-        else if (numWordsNotFound.numWordsNotFound <= 5){
-            return allWords.keySet().toArray()[n].toString().substring(0,2);
-        }
-        return allWords.keySet().toArray()[n].toString().substring(0,3);
     }
 
     public void setDif(String Dif){
