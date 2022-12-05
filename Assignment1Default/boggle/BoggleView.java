@@ -239,8 +239,8 @@ public class BoggleView {
             System.out.println("end game!");
             this.wordsGuessed = "";
             this.position_wordGuessed = new ArrayList<>();
-            model.runGame();
             model.endGame();
+            model.runGame();
             buttonArrayList();
             GridPane g = addButtonsToCanvas();
             g.setAlignment(Pos.CENTER);
