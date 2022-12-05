@@ -48,7 +48,7 @@ public class BoggleView {
     BoggleTimer timer;
     Stage stage;
 
-    Button newGame, endGame, muteMusic, startTimerButton; //buttons for functions
+    Button instructions, endGame, muteMusic, startTimerButton; //buttons for functions
     Label scoreLabel = new Label("");
     Label incorrectWordsLabel = new Label("");
     Label gridTypelabel = new Label("");
@@ -147,10 +147,10 @@ public class BoggleView {
         incorrectWordsLabel.setFont(new Font(20));
 
         //add buttons
-        newGame = new Button("New Game");
-        newGame.setId("newGame");
-        newGame.setPrefSize(150, 50);
-        newGame.setFont(new Font(12));
+        instructions = new Button("Instructions");
+        instructions.setId("instructions");
+        instructions.setPrefSize(150, 50);
+        instructions.setFont(new Font(12));
 
         endGame = new Button("End Game");
         endGame.setId("endGame");
@@ -189,7 +189,7 @@ public class BoggleView {
         startTimerButton.setPrefSize(150, 50);
         startTimerButton.setFont(new Font(12));
 
-        HBox controls = new HBox(20, newGame, endGame, muteMusic);
+        HBox controls = new HBox(20, instructions, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
@@ -208,8 +208,7 @@ public class BoggleView {
 
 
         //Although this is the same as endGame, all the appropriate scores are reset but are do not need to be dispayed to the user.
-        newGame.setOnAction(e -> {
-            System.out.println("new game!");
+        instructions.setOnAction(e -> {
            //Accessibility feature: read out instructions when game starts
             Voice voice = new Voice();
             String[] instructions = new String[]{
@@ -268,8 +267,6 @@ public class BoggleView {
             borderPane.requestFocus();
         });
 
-        buttonArrayList();
-        addButtonsToCanvas();
 
 
         //Accessibility feature: read out the word of the button clicked
@@ -279,7 +276,7 @@ public class BoggleView {
             });
         }
 
-
+        buttonArrayList();
         GridPane gridPane = addButtonsToCanvas();
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
@@ -339,24 +336,22 @@ public class BoggleView {
             case "easy" -> {
                 difTypeLabel.setText("Difficulty: EASY");
                 this.model.setDiffuclty("easy");
-                buttonList.clear();
             }
             //change grid type from the model
             case "medium" -> {
                 difTypeLabel.setText("Difficulty: MEDIUM");
                 this.model.setDiffuclty("medium");
-                buttonList.clear();
             }
             //change grid type from the model (also end the game before doing so)
             case "hard" -> {
                 difTypeLabel.setText("Difficulty: HARD");
                 this.model.setDiffuclty("hard");
-                buttonList.clear();
             }
         }
-
+        this.model.changeGridSize(this.model.size);
         buttonArrayList();
         GridPane g = addButtonsToCanvas();
+        g.setAlignment(Pos.CENTER);
         borderPane.setCenter(g);
     }
 
@@ -375,12 +370,14 @@ public class BoggleView {
                 button.setOnAction(e -> {
                     System.out.println(button.getText() + " " + finalI + finalJ);
                     //Highlight button when pressed, unhighlight after guessing a word
+                    wordToVoice(button);
 
                     Integer o = Integer.valueOf(String.valueOf(finalI) + String.valueOf(finalJ));
                     if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)) {
                         System.out.println("guessing word");
                         model.checkWord(this.wordsGuessed);
                         this.wordsGuessed = "";
+                        this.position_wordGuessed.clear();
                         for (Button val : buttonList) {
                             val.setStyle(null);
                         }
@@ -397,17 +394,6 @@ public class BoggleView {
                 }
             }
 
-
-
-    /**
-     * Create a line between the most recent button pressed and the last.
-     *
-     * @param x, y
-     **/
-
-    private void buttonLineSelection(int x, int y) {
-        //to be created in later sprint
-    }
 
     /**
      * Update score on UI
