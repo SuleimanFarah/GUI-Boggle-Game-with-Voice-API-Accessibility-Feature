@@ -38,11 +38,6 @@ public class BoggleTests {
         assertEquals(allWords.get("HOST").size(), 4);
     }
     @Test
-    void songs(){
-        BoggleMusic music = new BoggleMusic();
-        music.startMusic();
-    }
-    @Test
     void findAllWords_small2() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         BoggleGame game = new BoggleGame();
         Method method = game.getClass().getDeclaredMethod("findAllWords", Map.class, Dictionary.class, BoggleGrid.class);

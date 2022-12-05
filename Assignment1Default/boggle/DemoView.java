@@ -50,6 +50,6 @@ public class DemoView{
         this.stage.show();
 }
     private void initializeTimer(){
-        this.timer.startTimer();
+        this.timer.startTimer(new BoggleModel());
     }
 }

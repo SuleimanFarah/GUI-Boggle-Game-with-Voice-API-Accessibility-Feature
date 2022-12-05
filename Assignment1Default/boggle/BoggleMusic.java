@@ -1,41 +1,25 @@
 package boggle;
 import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
-import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
-
-
+import java.io.IOException;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 public class BoggleMusic {
-    private MediaPlayer mediaPlayer;
-    private Media media;
-    @FXML
-    public void startMusic(){
-        File file = new File("C:\\Users\\User\\TSDC\\Assignment1Default\\boggle\\musics\\musicbackground.mp3");
-        media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
+    private Clip sound;
+    public void start(String filename) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        Clip clip = AudioSystem.getClip();
+        sound = clip;
+        clip.open(AudioSystem.getAudioInputStream(new File(filename)));
+        clip.start();
     }
-    public void pauseMusic(){
-        mediaPlayer.pause();
+    public void play(){
+        sound.start();
     }
-
+    public void pause(){
+        sound.stop();
+    }
 
 }
