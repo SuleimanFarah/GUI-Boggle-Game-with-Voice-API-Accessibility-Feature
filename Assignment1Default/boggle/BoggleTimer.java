@@ -11,7 +11,7 @@ public class BoggleTimer{
     private final Integer startTime = 60;
     private Integer seconds = startTime;
 
-    public void startTimer() {
+    public void startTimer(BoggleModel model) {
 
         Timeline time = new Timeline();
         KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>(){
@@ -21,7 +21,7 @@ public class BoggleTimer{
                 seconds--;
                 BoggleView.timerLabel.setText("Time: "+seconds.toString());
                 if(seconds<=0){
-                    terminateGame();
+                    terminateGame(model);
                     time.stop();
                 }
             }
@@ -35,7 +35,7 @@ public class BoggleTimer{
         time.play();
     }
 
-    private void terminateGame(){
-        //todo
+    private void terminateGame(BoggleModel model){
+        model.endGame();
     }
 }
