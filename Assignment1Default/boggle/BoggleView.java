@@ -1,6 +1,10 @@
 package boggle;
 
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,8 +19,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.*;
 
 
 /**
@@ -32,18 +50,27 @@ public class BoggleView {
 
     Button newGame, endGame, muteMusic, startTimerButton; //buttons for functions
     Label scoreLabel = new Label("");
+    Label incorrectWordsLabel = new Label("");
     Label gridTypelabel = new Label("");
+    Label difTypeLabel = new Label("");
     static Label timerLabel;
 
     RadioButton gridType; //4x4 boggle grid radio button
     RadioButton gridType2; //5x5 boggle grid radio button
+
+    RadioButton diffType1; //easy
+    RadioButton diffType2; //medium
+    RadioButton diffType3; //hard
 
     ArrayList<Button> buttonList; // list of grid buttons (interacted with to engage with boggle)
     BorderPane borderPane;
     Canvas canvas;
     GraphicsContext gc; //the graphics context will be linked to the canvas
 
-    HBox controls;
+    private String wordsGuessed; //Collection of characters populated from the buttons that the user pressed.
+    private List<Integer> position_wordGuessed;
+
+    HBox controls; //Segmented gui components used to organize the BorderPane.
 
     VBox scoreBox;
 
@@ -64,6 +91,8 @@ public class BoggleView {
         this.stage = stage;
         this.timer = timer;
         this.buttonList = new ArrayList<>();
+        this.wordsGuessed = "";
+        this.position_wordGuessed = new ArrayList<>();
         initUI();
     }
 
@@ -85,6 +114,7 @@ public class BoggleView {
         //labels
         gridTypelabel.setId("GameModeLabel");
         scoreLabel.setId("ScoreLabel");
+        incorrectWordsLabel.setId("IncorrectWordsLabel");
 
         gridTypelabel.setText("GridType: 4x4");
         gridTypelabel.setMinWidth(50);
@@ -113,6 +143,9 @@ public class BoggleView {
         scoreLabel.setText("Score is: 0");
         scoreLabel.setFont(new Font(20));
 
+        incorrectWordsLabel.setText("IncorrectWords: 0");
+        incorrectWordsLabel.setFont(new Font(20));
+
         //add buttons
         newGame = new Button("New Game");
         newGame.setId("newGame");
@@ -128,7 +161,29 @@ public class BoggleView {
         muteMusic.setId("Save");
         muteMusic.setPrefSize(150, 50);
         muteMusic.setFont(new Font(12));
+        
+        difTypeLabel.setText("Difficulty:");
+        difTypeLabel.setMinWidth(50);
+        difTypeLabel.setFont(new Font(20));
 
+        final ToggleGroup toggleGroup2 = new ToggleGroup();
+
+        RadioButton diffType1 = new RadioButton("easy");
+        diffType1.setToggleGroup(toggleGroup2);
+        diffType1.setSelected(true);
+        diffType1.setUserData(Color.SALMON);
+        diffType1.setFont(new Font(16));
+
+        RadioButton diffType2 = new RadioButton("medium");
+        diffType2.setToggleGroup(toggleGroup2);
+        diffType2.setUserData(Color.SALMON);
+        diffType2.setFont(new Font(16));
+
+        RadioButton diffType3 = new RadioButton("hard");
+        diffType3.setToggleGroup(toggleGroup2);
+        diffType3.setUserData(Color.SALMON);
+        diffType3.setFont(new Font(16));
+        
         startTimerButton = new Button("Start a timed Game");
         startTimerButton.setId("startTimer");
         startTimerButton.setPrefSize(150, 50);
@@ -137,8 +192,9 @@ public class BoggleView {
         HBox controls = new HBox(20, newGame, endGame, muteMusic);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
-
-        VBox scoreBox = new VBox(20, scoreLabel, gridTypelabel, gridType, gridType2);
+        
+        VBox scoreBox = new VBox(20, scoreLabel, incorrectWordsLabel, gridTypelabel, gridType, gridType2, difTypeLabel, diffType1, diffType2, diffType3);
+        
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         scoreBox.setAlignment(Pos.TOP_CENTER);
 
@@ -148,6 +204,7 @@ public class BoggleView {
         timerBox.setAlignment(Pos.BASELINE_CENTER);
 
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
+        toggleGroup2.selectedToggleProperty().addListener((observable, oldVal, newVal) -> setDifficult(newVal));
 
 
         //Although this is the same as endGame, all the appropriate scores are reset but are do not need to be dispayed to the user.
@@ -181,6 +238,15 @@ public class BoggleView {
         endGame.setOnAction(e -> {
             wordToVoice(endGame);
             System.out.println("end game!");
+            this.wordsGuessed = "";
+            this.position_wordGuessed = new ArrayList<>();
+            model.runGame();
+            model.endGame();
+            buttonArrayList();
+            GridPane g = addButtonsToCanvas();
+            g.setAlignment(Pos.CENTER);
+            borderPane.setCenter(g);
+            updateScore();
             borderPane.requestFocus();
         });
 
@@ -205,6 +271,7 @@ public class BoggleView {
         buttonArrayList();
         addButtonsToCanvas();
 
+
         //Accessibility feature: read out the word of the button clicked
         for(Button button: buttonList){
             button.setOnAction(e ->{
@@ -212,8 +279,9 @@ public class BoggleView {
             });
         }
 
-        GridPane gridPane = addButtonsToCanvas();
 
+        GridPane gridPane = addButtonsToCanvas();
+        gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
         borderPane.setTop(controls);
         borderPane.setRight(scoreBox);
@@ -222,6 +290,7 @@ public class BoggleView {
 //        gc.setStroke(Color.BLANCHEDALMOND);
 //        gc.setFill(Color.CORAL);
 //        gc.fillRect(150, 20, this.width, this.height);
+
 
 
         var scene = new Scene(borderPane, 800, 600);
@@ -243,14 +312,49 @@ public class BoggleView {
         if (stateText.equals("4x4")) {
             gridTypelabel.setText("GridType: 4x4");
             buttonList.clear();
-            this.model.changeGridSize(4);
+            this.model.size = 4;
+            this.model.endGame();
+            this.model.changeGridSize(this.model.size);
+            updateScore();
             //change grid type from the model
         } else if (stateText.equals("5x5")) {
             gridTypelabel.setText("GridType: 5x5");
             buttonList.clear();
-            this.model.changeGridSize(5);
+            this.model.size = 5;
+            this.model.endGame();
+            this.model.changeGridSize(this.model.size);
+            updateScore();
             //change grid type from the model (also end the game before doing so)
         }
+        buttonArrayList();
+        GridPane g = addButtonsToCanvas();
+        g.setAlignment(Pos.CENTER);
+        borderPane.setCenter(g);
+    }
+
+    private void setDifficult(Toggle val){
+        RadioButton state = (RadioButton)val.getToggleGroup().getSelectedToggle();
+        String stateText = state.getText();
+        switch (stateText) {
+            case "easy" -> {
+                difTypeLabel.setText("Difficulty: EASY");
+                this.model.setDiffuclty("easy");
+                buttonList.clear();
+            }
+            //change grid type from the model
+            case "medium" -> {
+                difTypeLabel.setText("Difficulty: MEDIUM");
+                this.model.setDiffuclty("medium");
+                buttonList.clear();
+            }
+            //change grid type from the model (also end the game before doing so)
+            case "hard" -> {
+                difTypeLabel.setText("Difficulty: HARD");
+                this.model.setDiffuclty("hard");
+                buttonList.clear();
+            }
+        }
+
         buttonArrayList();
         GridPane g = addButtonsToCanvas();
         borderPane.setCenter(g);
@@ -266,6 +370,32 @@ public class BoggleView {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 this.buttonList.add(new Button(Character.toString(this.model.getGrid().getCharAt(i, j))));
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                Button button = new Button(Character.toString(this.model.getGrid().getCharAt(i,j)));
+                int finalI = i;
+                int finalJ = j;
+                button.setOnAction(e -> {
+                   System.out.println(button.getText() + " " + finalI + finalJ);
+                    //Highlight button when pressed, unhighlight after guessing a word
+
+                    Integer o = Integer.valueOf(String.valueOf(finalI) + String.valueOf(finalJ));
+                    if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)){
+                       System.out.println("guessing word");
+                        model.checkWord(this.wordsGuessed);
+                        this.wordsGuessed = "";
+                        for(Button val: buttonList){
+                            val.setStyle(null);
+                        }
+                        updateScore();
+                   }else{
+                        button.setStyle("-fx-background-color: red;" + "-fx-text-fill: white");//turn a button red after the user has pressed it.
+                       this.wordsGuessed = this.wordsGuessed + button.getText();
+                       this.position_wordGuessed.add(o);
+                   }
+                });
+                this.buttonList.add(button);
+
             }
         }
     }
@@ -307,6 +437,32 @@ public class BoggleView {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     gPane.add(buttonList.get(count), i, j);
+
+        gPane.setPrefHeight(500);
+        gPane.setMaxHeight(500);
+        gPane.setPrefWidth(500);
+        gPane.setMaxWidth(500);
+        gPane.setPrefSize(500,500);
+
+        if (buttonList.size() == 16){
+            for(int i = 0; i<4; i++){
+                for(int j = 0; j < 4; j++){
+                    buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
+                    buttonList.get(count).maxWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).maxHeight(Integer.MAX_VALUE);
+                    gPane.add(buttonList.get(count), i,j);
+                    count++;
+                }
+            }
+        }else{
+            for(int i = 0; i<5; i++){
+                for(int j = 0; j < 5; j++){
+                    buttonList.get(count).setPrefWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).setPrefHeight(Integer.MAX_VALUE);
+                    buttonList.get(count).maxWidth(Integer.MAX_VALUE);
+                    buttonList.get(count).maxHeight(Integer.MAX_VALUE);
+                    gPane.add(buttonList.get(count), i,j);
                     count++;
                 }
             }
