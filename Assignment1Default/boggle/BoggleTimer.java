@@ -35,7 +35,7 @@ public class BoggleTimer{
         time.play();
     }
     
-    private void addTimer(){
+    public void addTimer(){
         seconds += 5;
     }
     
