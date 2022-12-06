@@ -342,6 +342,7 @@ public class BoggleView {
             updateHint("reset");
             updateScore();
             updateCompWords();
+            updateTimer();
             //change grid type from the model
         } else if (stateText.equals("5x5")) {
             gridTypelabel.setText("GridType: 5x5");
@@ -447,6 +448,11 @@ public class BoggleView {
             obj.resetNumWordsNotFounds();
         }
         hintLabel.setText("Hint: " + model.getHint());
+    }
+    
+    private void updateTimer(){
+        if(timerLabel.isVisible())
+            this.timer.addTimer();
     }
 
     /**
