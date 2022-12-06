@@ -34,7 +34,11 @@ public class BoggleTimer{
         }
         time.play();
     }
-
+    
+    private void addTimer(){
+        seconds += 5;
+    }
+    
     private void terminateGame(BoggleModel model){
         model.endGame();
     }
