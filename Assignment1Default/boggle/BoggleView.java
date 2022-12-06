@@ -412,10 +412,6 @@ public class BoggleView {
                     if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)) {
                         System.out.println("guessing word");
                         model.checkWord(this.wordsGuessed);
-                        if (model.getStats().getPlayerWords().contains(this.wordsGuessed)){
-                            inCorrectWords obj = inCorrectWords.getFirstInstance();
-                            obj.resetNumWordsNotFounds();
-                        }
                         this.wordsGuessed = "";
                         this.position_wordGuessed.clear();
                         for (Button val : buttonList) {
