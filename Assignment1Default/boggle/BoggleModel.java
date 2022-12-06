@@ -3,6 +3,7 @@ package boggle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class BoggleModel {
     private BoggleStats stats;
@@ -81,6 +82,23 @@ public class BoggleModel {
     public BoggleGrid getGrid(){
         return this.baseGrid;
     }
+
+    public String getHint(){
+        Random rand = new Random();
+        inCorrectWords numWordsNotFound= inCorrectWords.getFirstInstance();
+        int n = rand.nextInt(allWords.size());
+        if (numWordsNotFound.numWordsNotFound <= 2){
+            return allWords.keySet().toArray()[n].toString().substring(0,1);
+        }
+        else if (numWordsNotFound.numWordsNotFound <= 5){
+            return allWords.keySet().toArray()[n].toString().substring(0,2);
+        }
+        return allWords.keySet().toArray()[n].toString().substring(0,3);
+    }
+
+    public BoggleGame getGame(){return this.boggleGame;}
+
+
 
 
 }

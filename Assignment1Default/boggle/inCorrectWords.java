@@ -1,11 +1,11 @@
 package boggle;
 
 public class inCorrectWords {
-    int numWordsNotFound;
+    int numWordsNotFound = 0;
     private static inCorrectWords firstInstance = null;
 
     private inCorrectWords(){
-        firstInstance.numWordsNotFound = 0;
+
     }
 
     public static inCorrectWords getFirstInstance(){
