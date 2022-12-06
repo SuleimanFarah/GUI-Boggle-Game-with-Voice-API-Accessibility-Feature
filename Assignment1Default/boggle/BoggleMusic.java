@@ -17,6 +17,7 @@ public class BoggleMusic {
     }
     public void play(){
         sound.start();
+        sound.loop(Clip.LOOP_CONTINUOUSLY);
     }
     public void pause(){
         sound.stop();

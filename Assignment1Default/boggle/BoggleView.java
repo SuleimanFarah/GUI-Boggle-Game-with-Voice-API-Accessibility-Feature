@@ -30,7 +30,10 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import org.junit.jupiter.api.Test;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -46,6 +49,7 @@ public class BoggleView {
 
     BoggleModel model; //reference to model
     BoggleTimer timer;
+    BoggleMusic music;
     Stage stage;
 
     Button instructions, endGame, muteMusic, startTimerButton; //buttons for functions
@@ -88,10 +92,11 @@ public class BoggleView {
      * @param stage application stage
      */
 
-    public BoggleView(BoggleModel model, Stage stage, BoggleTimer timer) {
+    public BoggleView(BoggleModel model, Stage stage, BoggleTimer timer, BoggleMusic music) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.model = model;
         this.stage = stage;
         this.timer = timer;
+        this.music = music;
         this.buttonList = new ArrayList<>();
         this.wordsGuessed = "";
         this.position_wordGuessed = new ArrayList<>();
@@ -101,7 +106,7 @@ public class BoggleView {
     /**
      * Initialize interface
      */
-    private void initUI() {
+    private void initUI() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.stage.setTitle("TSDC Boggle");
         this.width = 600;
         this.height = 500;
@@ -212,6 +217,8 @@ public class BoggleView {
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
         toggleGroup2.selectedToggleProperty().addListener((observable, oldVal, newVal) -> setDifficult(newVal));
 
+        music.start("music.wav");
+
 
         //Although this is the same as endGame, all the appropriate scores are reset but are do not need to be dispayed to the user.
         instructions.setOnAction(e -> {
@@ -261,8 +268,17 @@ public class BoggleView {
         //Configures this such that it mutes the music playing in the game during launch.
         muteMusic.setOnAction(e -> {
             //mute music code
+            if(muteMusic.getText() == "Mute Music"){
+                muteMusic.setText("Unmute Music");
+                music.pause();
+                System.out.println("Unmute Music");
+            }
+            else{
+                muteMusic.setText("Mute Music");
+                music.play();
+                System.out.println("Mute Music");
+            }
             wordToVoice(muteMusic);
-            System.out.println("mute music!");
             borderPane.requestFocus();
         });
 
