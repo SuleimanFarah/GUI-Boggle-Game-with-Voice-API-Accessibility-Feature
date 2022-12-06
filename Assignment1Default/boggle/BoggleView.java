@@ -342,7 +342,6 @@ public class BoggleView {
             updateHint("reset");
             updateScore();
             updateCompWords();
-            updateTimer();
             //change grid type from the model
         } else if (stateText.equals("5x5")) {
             gridTypelabel.setText("GridType: 5x5");
@@ -422,6 +421,7 @@ public class BoggleView {
                         }
                         updateHint("no reset");
                         updateScore();
+                        updateTimer();s
                     } else {
                         button.setStyle("-fx-background-color: red;" + "-fx-text-fill: white");//turn a button red after the user has pressed it.
                         this.wordsGuessed = this.wordsGuessed + button.getText();
