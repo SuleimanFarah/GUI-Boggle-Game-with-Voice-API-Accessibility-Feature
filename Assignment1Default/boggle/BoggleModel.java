@@ -96,5 +96,9 @@ public class BoggleModel {
         return allWords.keySet().toArray()[n].toString().substring(0,3);
     }
 
+    public BoggleGame getGame(){return this.boggleGame;}
+
+
+
 
 }

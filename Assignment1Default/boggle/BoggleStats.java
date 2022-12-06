@@ -154,6 +154,8 @@ public class BoggleStats {
         return this.playerWords;
     }
 
+    public int getComputerWords() {return this.computerWords.size();}
+
     /*
      * @return int The number of rounds played
      */

@@ -30,7 +30,7 @@ public class BoggleGame {
                     "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDLNOR", "DDHNOT", "DHHLOR",
                     "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
 
-    private String difficulty = "hard";
+    public String difficulty = "easy";
 
     /* 
      * BoggleGame constructor
@@ -312,7 +312,7 @@ public class BoggleGame {
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
      * @param chooseDif the choosen difficulty of the computer by the human (1=easy,2=medium,3=hard)
      */
-    private void computerMove(Map<String,ArrayList<Position>> all_words){
+    public int computerMove(Map<String,ArrayList<Position>> all_words){
         ArrayList<String> keySetC = new ArrayList<String>(all_words.keySet());
         int size = (keySetC.size()/3);
         if (difficulty.equals("medium")){
@@ -326,10 +326,12 @@ public class BoggleGame {
                 this.gameStats.addWord(keySetC.get(i), BoggleStats.Player.Computer);
             }
         }
+        return size;
     }
 
     public void setDif(String Dif){
         this.difficulty = Dif;
     }
+
 
 }
