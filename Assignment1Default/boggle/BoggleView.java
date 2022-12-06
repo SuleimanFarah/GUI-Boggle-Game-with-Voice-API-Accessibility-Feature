@@ -50,8 +50,9 @@ public class BoggleView {
     BoggleModel model; //reference to model
     BoggleTimer timer;
     BoggleMusic music;
+    BoggleNotifications notifications;
     Stage stage;
-
+    
     Button instructions, endGame, muteMusic, startTimerButton; //buttons for functions
     Label scoreLabel = new Label("");
     Label hintLabel = new Label("");
@@ -97,6 +98,7 @@ public class BoggleView {
         this.stage = stage;
         this.timer = timer;
         this.music = music;
+        this.notifications = new BoggleNotifications();
         this.buttonList = new ArrayList<>();
         this.wordsGuessed = "";
         this.position_wordGuessed = new ArrayList<>();
@@ -412,6 +414,7 @@ public class BoggleView {
 
                     Integer o = Integer.valueOf(String.valueOf(finalI) + String.valueOf(finalJ));
                     if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)) {
+                        int temp = model.getScore();
                         System.out.println("guessing word");
                         model.checkWord(this.wordsGuessed);
                         this.wordsGuessed = "";
@@ -421,7 +424,29 @@ public class BoggleView {
                         }
                         updateHint("no reset");
                         updateScore();
-                        updateTimer();s
+                        if(temp != model.getScore()){
+                            updateTimer();
+                            try {
+                                notifications.notif("correct");
+                            } catch (UnsupportedAudioFileException ex) {
+                                throw new RuntimeException(ex);
+                            } catch (LineUnavailableException ex) {
+                                throw new RuntimeException(ex);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                        else if(temp == model.getScore()) {
+                            try {
+                                notifications.notif("incorrect");
+                            } catch (UnsupportedAudioFileException ex) {
+                                throw new RuntimeException(ex);
+                            } catch (LineUnavailableException ex) {
+                                throw new RuntimeException(ex);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
                     } else {
                         button.setStyle("-fx-background-color: red;" + "-fx-text-fill: white");//turn a button red after the user has pressed it.
                         this.wordsGuessed = this.wordsGuessed + button.getText();
