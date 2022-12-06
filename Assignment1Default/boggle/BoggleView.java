@@ -50,7 +50,7 @@ public class BoggleView {
 
     Button instructions, endGame, muteMusic, startTimerButton; //buttons for functions
     Label scoreLabel = new Label("");
-    Label incorrectWordsLabel = new Label("");
+    Label hintLabel = new Label("");
     Label gridTypelabel = new Label("");
     Label difTypeLabel = new Label("");
     static Label timerLabel;
@@ -114,7 +114,7 @@ public class BoggleView {
         //labels
         gridTypelabel.setId("GameModeLabel");
         scoreLabel.setId("ScoreLabel");
-        incorrectWordsLabel.setId("IncorrectWordsLabel");
+        hintLabel.setId("Hint");
 
         gridTypelabel.setText("GridType: 4x4");
         gridTypelabel.setMinWidth(50);
@@ -143,8 +143,8 @@ public class BoggleView {
         scoreLabel.setText("Score is: 0");
         scoreLabel.setFont(new Font(20));
 
-        incorrectWordsLabel.setText("IncorrectWords: 0");
-        incorrectWordsLabel.setFont(new Font(20));
+        hintLabel.setText("Hint: " + model.getHint());
+        hintLabel.setFont(new Font(20));
 
         //add buttons
         instructions = new Button("Instructions");
@@ -189,18 +189,18 @@ public class BoggleView {
         startTimerButton.setPrefSize(150, 50);
         startTimerButton.setFont(new Font(12));
 
-        HBox controls = new HBox(20, instructions, endGame, muteMusic);
+        HBox controls = new HBox(20, instructions, endGame, muteMusic, timerLabel, startTimerButton);
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
-        VBox scoreBox = new VBox(20, scoreLabel, incorrectWordsLabel, gridTypelabel, gridType, gridType2, difTypeLabel, diffType1, diffType2, diffType3);
+        VBox scoreBox = new VBox(20, scoreLabel, hintLabel, gridTypelabel, gridType, gridType2, difTypeLabel, diffType1, diffType2, diffType3);
 
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         scoreBox.setAlignment(Pos.TOP_CENTER);
 
         HBox timerBox = new HBox(5);
         timerBox.setPadding(new Insets(20, 20, 20, 20));
-        timerBox.getChildren().addAll(timerLabel, startTimerButton);
+//        timerBox.getChildren().addAll(timerLabel, startTimerButton);
         timerBox.setAlignment(Pos.BASELINE_CENTER);
 
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> swapGridType(newVal));
@@ -239,12 +239,13 @@ public class BoggleView {
             System.out.println("end game!");
             this.wordsGuessed = "";
             this.position_wordGuessed = new ArrayList<>();
-            model.runGame();
             model.endGame();
+            model.runGame();
             buttonArrayList();
             GridPane g = addButtonsToCanvas();
             g.setAlignment(Pos.CENTER);
             borderPane.setCenter(g);
+            updateHint("reset");
             updateScore();
             borderPane.requestFocus();
         });
@@ -312,6 +313,7 @@ public class BoggleView {
             this.model.size = 4;
             this.model.endGame();
             this.model.changeGridSize(this.model.size);
+            updateHint("reset");
             updateScore();
             //change grid type from the model
         } else if (stateText.equals("5x5")) {
@@ -320,6 +322,9 @@ public class BoggleView {
             this.model.size = 5;
             this.model.endGame();
             this.model.changeGridSize(this.model.size);
+
+            updateHint("reset");
+
             updateScore();
             //change grid type from the model (also end the game before doing so)
         }
@@ -381,6 +386,7 @@ public class BoggleView {
                         for (Button val : buttonList) {
                             val.setStyle(null);
                         }
+                        updateHint("no reset");
                         updateScore();
                     } else {
                         button.setStyle("-fx-background-color: red;" + "-fx-text-fill: white");//turn a button red after the user has pressed it.
@@ -400,6 +406,14 @@ public class BoggleView {
      */
     private void updateScore() {
         scoreLabel.setText("Score is: " + model.getScore());
+    }
+
+    private void updateHint(String reset){
+        if (reset.equals("reset")){
+            inCorrectWords obj = inCorrectWords.getFirstInstance();
+            obj.resetNumWordsNotFounds();
+        }
+        hintLabel.setText("Hint: " + model.getHint());
     }
 
     /**
