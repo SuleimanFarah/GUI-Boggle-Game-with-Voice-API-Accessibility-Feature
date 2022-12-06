@@ -21,8 +21,7 @@ public class BoggleTimer{
                 seconds--;
                 BoggleView.timerLabel.setText("Time: "+seconds.toString());
                 if(seconds<=0){
-                    terminateGame(model);
-                    time.stop();
+                    terminateGame(model, time);
                 }
             }
         });
@@ -39,7 +38,8 @@ public class BoggleTimer{
         seconds += 5;
     }
     
-    private void terminateGame(BoggleModel model){
+    public void terminateGame(BoggleModel model, Timeline time){
         model.endGame();
+        time.stop();
     }
 }

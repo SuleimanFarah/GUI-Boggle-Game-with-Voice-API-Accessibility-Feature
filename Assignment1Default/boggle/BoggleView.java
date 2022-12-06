@@ -264,7 +264,8 @@ public class BoggleView {
             updateHint("reset");
             updateScore();
             updateCompWords();
-
+            startTimerButton.setVisible(true);
+            timerLabel.setVisible(false);
             borderPane.requestFocus();
         });
 
@@ -275,12 +276,12 @@ public class BoggleView {
             if(muteMusic.getText() == "Mute Music"){
                 muteMusic.setText("Unmute Music");
                 music.pause();
-                System.out.println("Unmute Music");
+                System.out.println("mute Music");
             }
             else{
                 muteMusic.setText("Mute Music");
                 music.play();
-                System.out.println("Mute Music");
+                System.out.println("Unmute Music");
             }
 
             borderPane.requestFocus();
