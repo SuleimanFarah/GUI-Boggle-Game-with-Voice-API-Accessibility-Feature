@@ -53,6 +53,8 @@ public class BoggleView {
     Label hintLabel = new Label("");
     Label gridTypelabel = new Label("");
     Label difTypeLabel = new Label("");
+
+    Label computerWords = new Label("");
     static Label timerLabel;
 
     RadioButton gridType; //4x4 boggle grid radio button
@@ -166,6 +168,10 @@ public class BoggleView {
         difTypeLabel.setMinWidth(50);
         difTypeLabel.setFont(new Font(20));
 
+        computerWords.setText("Computer words found: " + model.getGame().computerMove(model.allWords));
+        computerWords.setMinWidth(50);
+        computerWords.setFont(new Font(20));
+
         final ToggleGroup toggleGroup2 = new ToggleGroup();
 
         RadioButton diffType1 = new RadioButton("easy");
@@ -193,7 +199,7 @@ public class BoggleView {
         controls.setPadding(new Insets(20, 20, 20, 20));
         controls.setAlignment(Pos.CENTER);
 
-        VBox scoreBox = new VBox(20, scoreLabel, hintLabel, gridTypelabel, gridType, gridType2, difTypeLabel, diffType1, diffType2, diffType3);
+        VBox scoreBox = new VBox(20, scoreLabel, hintLabel, gridTypelabel, gridType, gridType2, difTypeLabel, diffType1, diffType2, diffType3, computerWords);
 
         scoreBox.setPadding(new Insets(20, 20, 20, 20));
         scoreBox.setAlignment(Pos.TOP_CENTER);
@@ -247,6 +253,8 @@ public class BoggleView {
             borderPane.setCenter(g);
             updateHint("reset");
             updateScore();
+            updateCompWords();
+
             borderPane.requestFocus();
         });
 
@@ -315,6 +323,7 @@ public class BoggleView {
             this.model.changeGridSize(this.model.size);
             updateHint("reset");
             updateScore();
+            updateCompWords();
             //change grid type from the model
         } else if (stateText.equals("5x5")) {
             gridTypelabel.setText("GridType: 5x5");
@@ -323,9 +332,10 @@ public class BoggleView {
             this.model.endGame();
             this.model.changeGridSize(this.model.size);
 
-            updateHint("reset");
 
+            updateHint("reset");
             updateScore();
+            updateCompWords();
             //change grid type from the model (also end the game before doing so)
         }
         buttonArrayList();
@@ -337,26 +347,31 @@ public class BoggleView {
     private void setDifficult(Toggle val){
         RadioButton state = (RadioButton)val.getToggleGroup().getSelectedToggle();
         String stateText = state.getText();
+        String dif = "";
         switch (stateText) {
             case "easy" -> {
                 difTypeLabel.setText("Difficulty: EASY");
-                this.model.setDiffuclty("easy");
+                dif = "easy";
             }
             //change grid type from the model
             case "medium" -> {
                 difTypeLabel.setText("Difficulty: MEDIUM");
-                this.model.setDiffuclty("medium");
+                dif = "medium";
             }
             //change grid type from the model (also end the game before doing so)
             case "hard" -> {
                 difTypeLabel.setText("Difficulty: HARD");
-                this.model.setDiffuclty("hard");
+                dif = "hard";
             }
         }
         this.model.changeGridSize(this.model.size);
+        updateScore();
+        updateHint("reset");
         buttonArrayList();
         GridPane g = addButtonsToCanvas();
         g.setAlignment(Pos.CENTER);
+        this.model.setDiffuclty(dif);
+        updateCompWords();
         borderPane.setCenter(g);
     }
 
@@ -381,6 +396,10 @@ public class BoggleView {
                     if (this.wordsGuessed.contains(button.getText()) && this.position_wordGuessed.contains(o)) {
                         System.out.println("guessing word");
                         model.checkWord(this.wordsGuessed);
+                        if (model.getStats().getPlayerWords().contains(this.wordsGuessed)){
+                            inCorrectWords obj = inCorrectWords.getFirstInstance();
+                            obj.resetNumWordsNotFounds();
+                        }
                         this.wordsGuessed = "";
                         this.position_wordGuessed.clear();
                         for (Button val : buttonList) {
@@ -456,6 +475,14 @@ public class BoggleView {
                 }
         return gPane;
     }
+    public void updateCompWords() {
+        computerWords.setText("Computer words found: " + model.getGame().computerMove(model.allWords));
+        System.out.println();
+        computerWords.setMinWidth(50);
+        computerWords.setFont(new Font(20));
+    }
+
+
 
     //initialize Timer
     private void initializeTimer() {
