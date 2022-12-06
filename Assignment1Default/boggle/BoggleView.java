@@ -233,6 +233,7 @@ public class BoggleView {
                     "or diagonally.",
                     "The words you find must be at least 4 letters long, ",
                     "and you can't use a letter twice in any single word.",
+                    "press the same button twice to submit a guess word",
                     "Your points will be based on word length:",
                     "a 4-letter word is worth 1 point,",
                     "5-letter words earn 2 points,",
@@ -268,6 +269,7 @@ public class BoggleView {
         //Configures this such that it mutes the music playing in the game during launch.
         muteMusic.setOnAction(e -> {
             //mute music code
+            wordToVoice(muteMusic);
             if(muteMusic.getText() == "Mute Music"){
                 muteMusic.setText("Unmute Music");
                 music.pause();
@@ -278,7 +280,7 @@ public class BoggleView {
                 music.play();
                 System.out.println("Mute Music");
             }
-            wordToVoice(muteMusic);
+
             borderPane.requestFocus();
         });
 

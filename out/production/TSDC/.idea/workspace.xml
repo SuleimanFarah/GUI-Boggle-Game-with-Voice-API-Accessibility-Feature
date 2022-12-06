@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="Added TTS for buttons">
-      <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSDC/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSDC/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +25,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/.idea/workspace.xml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/firstFile.txt" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -39,6 +40,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
     &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
     &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
     &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
@@ -46,7 +48,8 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;18&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/jose/Downloads/freetts-1.2.2-bin/freetts-1.2/lib&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/jose/TSDC&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
@@ -119,9 +122,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.boggle.BoggleMain" />
-        <item itemvalue="Application.BoggleMain" />
         <item itemvalue="Application.DemoBoggleApp" />
         <item itemvalue="Application.BoggleTimer" />
+        <item itemvalue="Application.BoggleMain" />
+        <item itemvalue="Application.DemoBoggleApp" />
       </list>
     </recent_temporary>
   </component>
@@ -140,7 +144,11 @@
       <workItem from="1669758334967" duration="7000" />
       <workItem from="1670011850813" duration="27572000" />
       <workItem from="1670195806320" duration="1838000" />
-      <workItem from="1670225801179" duration="2161000" />
+      <workItem from="1670225801179" duration="2495000" />
+      <workItem from="1670265727256" duration="2546000" />
+      <workItem from="1670272564772" duration="1702000" />
+      <workItem from="1670274270152" duration="87000" />
+      <workItem from="1670274360022" duration="718000" />
     </task>
     <task id="LOCAL-00001" summary="Merged timer to BoggleView">
       <created>1670015593877</created>
@@ -181,20 +189,13 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="RELOAD_CONTEXT" value="false" />
     <MESSAGE value="Merged timer to BoggleView" />
     <MESSAGE value="Added TTS for instructions" />
     <MESSAGE value="Added TTS for buttons" />
     <option name="LAST_COMMIT_MESSAGE" value="Added TTS for buttons" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.ClassCastException" package="java.lang" />
-          <option name="timeStamp" value="6" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.io.IOException" memberName="detailMessage" />
