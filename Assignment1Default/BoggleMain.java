@@ -27,6 +27,7 @@ public class BoggleMain extends Application{
         BoggleTimer timer = new BoggleTimer();
         BoggleMusic music = new BoggleMusic();
         BoggleView view = new BoggleView(model, primaryStage, timer, music);
-    }
+        BoggleView view = new BoggleView(model, primaryStage, timer);
+        }
 
 }

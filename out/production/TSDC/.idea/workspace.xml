@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="Added TTS for buttons">
+      <change beforePath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment1Default/boggle/BoggleView.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/firstFile.txt" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2I1Q6W3b925dNv7n9Gm9CcbHwmA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;18&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/jose/Downloads/freetts-1.2.2-bin/freetts-1.2/lib&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Assignment1Default/boggle" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/textToSpeech" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.boggle.BoggleMain">
+    <configuration name="BoggleMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BoggleMain" />
+      <module name="TSDC" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoggleTimer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="boggle.BoggleTimer" />
+      <module name="TSDC" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/../CSC207/quandoug/javafx-sdk-19/lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="boggle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DemoBoggleApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="boggle.DemoBoggleApp" />
+      <module name="TSDC" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/../CSC207/quandoug/javafx-sdk-19/lib&quot; --add-modules javafx.controls,javafx.fxml " />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="boggle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="boggle.BoggleMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="boggle.BoggleMain" />
+      <module name="TSDC" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/../CSC207/quandoug/javafx-sdk-19/lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="boggle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.boggle.BoggleMain" />
+      <item itemvalue="Application.BoggleMain" />
+      <item itemvalue="Application.BoggleTimer" />
+      <item itemvalue="Application.DemoBoggleApp" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.boggle.BoggleMain" />
+        <item itemvalue="Application.BoggleMain" />
+        <item itemvalue="Application.DemoBoggleApp" />
+        <item itemvalue="Application.BoggleTimer" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="198885ca-bfbd-4fb6-8356-c049b63f4238" name="Changes" comment="" />
+      <created>1669346434677</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1669346434677</updated>
+      <workItem from="1669346435899" duration="7026000" />
+      <workItem from="1669521332094" duration="4965000" />
+      <workItem from="1669579856465" duration="9577000" />
+      <workItem from="1669682543153" duration="912000" />
+      <workItem from="1669758334967" duration="7000" />
+      <workItem from="1670011850813" duration="27572000" />
+      <workItem from="1670195806320" duration="1838000" />
+      <workItem from="1670225801179" duration="2161000" />
+    </task>
+    <task id="LOCAL-00001" summary="Merged timer to BoggleView">
+      <created>1670015593877</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1670015593877</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added TTS for instructions">
+      <created>1670044110699</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1670044110699</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added TTS for buttons">
+      <created>1670048838921</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1670048838921</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merged timer to BoggleView" />
+    <MESSAGE value="Added TTS for instructions" />
+    <MESSAGE value="Added TTS for buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added TTS for buttons" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ClassCastException" package="java.lang" />
+          <option name="timeStamp" value="6" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.io.IOException" memberName="detailMessage" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+</project>
