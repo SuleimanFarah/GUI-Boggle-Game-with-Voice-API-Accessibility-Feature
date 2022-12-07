@@ -152,6 +152,7 @@ public class BoggleView {
         scoreLabel.setText("Score is: 0");
         scoreLabel.setFont(new Font(20));
 
+        //hint label
         hintLabel.setText("Hint: " + model.getHint());
         hintLabel.setFont(new Font(20));
 
@@ -365,6 +366,8 @@ public class BoggleView {
         borderPane.setCenter(g);
     }
 
+    //sets difficulty, which updates the difficulty of boggle game from the model based on the state
+    // of the raiod button given
     private void setDifficult(Toggle val){
         RadioButton state = (RadioButton)val.getToggleGroup().getSelectedToggle();
         String stateText = state.getText();
@@ -468,6 +471,7 @@ public class BoggleView {
         scoreLabel.setText("Score is: " + model.getScore());
     }
 
+    //updates the hint label based on incorrect words
     private void updateHint(String reset){
         if (reset.equals("reset")){
             inCorrectWords obj = inCorrectWords.getFirstInstance();
@@ -521,6 +525,8 @@ public class BoggleView {
                 }
         return gPane;
     }
+
+    //updates the label computed words using computer move from bogglegame
     public void updateCompWords() {
         computerWords.setText("Computer words found: " + model.getGame().computerMove(model.allWords));
         System.out.println();

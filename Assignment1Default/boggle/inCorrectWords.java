@@ -1,6 +1,8 @@
 package boggle;
 
+//incorrectWords singleton class
 public class inCorrectWords {
+    //user incorrectWords guessed starts at 0
     int numWordsNotFound = 0;
     private static inCorrectWords firstInstance = null;
 
