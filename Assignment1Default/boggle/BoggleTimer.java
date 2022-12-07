@@ -33,11 +33,11 @@ public class BoggleTimer{
         }
         time.play();
     }
-    
+    //add extra time whenever a correct word is guessed as a reward
     public void addTimer(){
         seconds += 5;
     }
-    
+    //terminates the game when time is up
     public void terminateGame(BoggleModel model, Timeline time){
         model.endGame();
         time.stop();
