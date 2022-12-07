@@ -30,6 +30,7 @@ public class BoggleGame {
                     "BJKQXZ", "CCNSTW", "CEIILT", "CEILPT", "CEIPST", "DDLNOR", "DDHNOT", "DHHLOR",
                     "DHLNOR", "EIIITT", "EMOTTT", "ENSSSU", "FIPRSY", "GORRVW", "HIPRRY", "NOOTUW", "OOOTTU"};
 
+    //difficulty of the game, easy by default
     public String difficulty = "easy";
 
     /* 
@@ -274,15 +275,15 @@ public class BoggleGame {
      */
 
     public void humanMove(BoggleGrid board, Map<String,ArrayList<Position>> allWords, String humanWord){
-        inCorrectWords inCorrectWordsObj = inCorrectWords.getFirstInstance();
+        inCorrectWords inCorrectWordsObj = inCorrectWords.getFirstInstance(); // obj used to incrmemet/reset
         if((!allWords.containsKey(humanWord) || this.gameStats.getPlayerWords().contains(humanWord))) {
 //            inCorrectWordsObj.incrementNumWordsNotFound();
 //            String help = getHint(inCorrectWordsObj.numWordsNotFound, allWords);
 //            System.out.println("Hint: " + help);
             System.out.println("Word not found");
-            inCorrectWordsObj.incrementNumWordsNotFound();
+            inCorrectWordsObj.incrementNumWordsNotFound(); // if they guessed wrong, incrmenet
         }else{
-            inCorrectWordsObj.resetNumWordsNotFounds();
+            inCorrectWordsObj.resetNumWordsNotFounds(); // gussed right, so back to zero
             this.gameStats.addWord(humanWord, BoggleStats.Player.Human);
 
         }
@@ -304,13 +305,10 @@ public class BoggleGame {
 
 
     /* 
-     * Gets words from the computer.  The computer should find words that are
-     * both valid and not in the player's word list.  For each word that the computer
-     * finds, update the computer's word list and increment the
-     * computer's score (stored in boggleStats).
+     * returns amount of words the computer could find on the provided list of all list of words,
+     * will change based on difficulty
      *
      * @param allWords A mutable list of all legal words that can be found, given the boggleGrid grid letters
-     * @param chooseDif the choosen difficulty of the computer by the human (1=easy,2=medium,3=hard)
      */
     public int computerMove(Map<String,ArrayList<Position>> all_words){
         ArrayList<String> keySetC = new ArrayList<String>(all_words.keySet());
@@ -329,6 +327,9 @@ public class BoggleGame {
         return size;
     }
 
+
+    //sets the difficulty of the boggle game based on a string
+    // @param is string difficulty (easy,medium,hard)
     public void setDif(String Dif){
         this.difficulty = Dif;
     }
